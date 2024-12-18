@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.ConfiguracoesPageView"
+             Title="Configurações"
+             x:Name="ConfigPageView"
+             Shell.NavBarIsVisible="True">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="15">
+                <!-- Crud de Produtos e Serviços-->
+                <VerticalStackLayout  HorizontalOptions="StartAndExpand" Spacing="10">
+                    <Button Text="Serviços"
+                            HeightRequest="40"
+                            ImageSource="pata.png"
+                            FontSize="16"
+                            Background="LightGray"
+                            TextColor="Black"
+                            Padding="5"
+                            Command="{Binding ServicosCommand}"/>
+                    <Button Text="Produtos"
+                            WidthRequest="350"
+                             HeightRequest="40"
+                            ImageSource="seringa.png"
+                            FontSize="16"
+                            Background="LightGray"
+                            TextColor="Black"
+                            Padding="5"/>
+                </VerticalStackLayout>
+
+                <!-- Seção: Notificações -->
+                <Label Text="Notificações " 
+                       FontAttributes="Bold" 
+                       FontSize="18"
+                       TextColor="Black" />
+
+                <StackLayout Orientation="Horizontal" Spacing="10" Margin="20, 0,0,0">
+                    <Label Text="Notificações"
+                           VerticalOptions="Center"
+                           FontSize="16"
+                           TextColor="Black" />
+                    <Switch IsToggled="False" 
+                            OnColor="LightBlue"
+                            ThumbColor="Blue"/>
+                </StackLayout>
+
+                <!-- Botão de Logout -->
+                <Button Text="Fechar"
+                        BackgroundColor="LightCoral"
+                        TextColor="White"
+                        CornerRadius="10"
+                        FontAttributes="Bold"
+                        VerticalOptions="EndAndExpand"
+                        Command="{Binding FecharAppCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

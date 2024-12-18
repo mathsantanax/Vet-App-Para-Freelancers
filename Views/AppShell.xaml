@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Vet_App_For_Freelancers.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Vet_App_For_Freelancers.Views"
+    Shell.TabBarForegroundColor="#5894E0"
+    Shell.TabBarTitleColor="#5894E0"
+    Shell.NavBarIsVisible="False">
+
+    <TabBar>
+        <Tab Title="Home" Icon="pata.png">
+            <ShellContent 
+            ContentTemplate="{DataTemplate local:HomePageView}" Route="HomePageView"/>
+        </Tab>
+        <Tab Title="Relátorio" Icon="price.png">
+            <ShellContent 
+        ContentTemplate="{DataTemplate local:HomePageView}"
+        Route="Relatorio"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

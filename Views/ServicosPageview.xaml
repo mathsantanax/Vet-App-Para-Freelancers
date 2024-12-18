@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Converter="clr-namespace:Vet_App_For_Freelancers.Helpers"
+             x:Class="Vet_App_For_Freelancers.Views.ServicosPageview"
+             x:Name="ServicosPageView"
+             Shell.NavBarIsVisible="True"
+             Title="Serviços
+             ">
+
+    <Grid RowDefinitions="Auto, Auto">
+        <Frame Grid.Row="0" Padding="0" HasShadow="True" Margin="10, 10, 10, 10" BorderColor="LightGray">
+            <StackLayout Margin="10" >
+                <Label Text="Serviços" HorizontalOptions="CenterAndExpand" Margin="5" FontSize="16" FontAttributes="Bold"/>
+                <CollectionView ItemsSource="{Binding ListServicos}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame HasShadow="True" Padding="5" Margin="0, 0, 0, 5" BackgroundColor="LightGray" BorderColor="Transparent">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <Label Text="{Binding NomeService}" Grid.Column="0" TranslationX="30"/>
+                                    <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" Grid.Column="1" WidthRequest="100"/>
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ServicosPageView}, Path=BindingContext.ServicoTapCommand}" 
+                                                              CommandParameter="{Binding .}" Tapped="OnItemTapped"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </Frame>
+
+        <VerticalStackLayout VerticalOptions="StartAndExpand" Padding="20" Grid.Row="1">
+            <Label Text="Serviço:"/>
+            <Entry Placeholder="Serviço"
+                       Text="{Binding Nome}"
+                       IsPassword="False"
+                       PlaceholderColor="Gray"
+                       Margin="5"
+                       TextColor="Black"
+                       ClearButtonVisibility="WhileEditing"/>
+            <Label Text="Preço:" />
+            <Entry Placeholder="Preço"
+                       Text="{Binding Preco}"
+                        IsPassword="False" 
+                        PlaceholderColor="Gray"
+                        Margin="5"
+                        TextColor="Black" 
+                       Keyboard="Numeric"
+                        ClearButtonVisibility="WhileEditing"/>
+            <Button Text="Cadastrar"
+                        Padding="15" 
+                        FontSize="18"
+                        CornerRadius="20"
+                        BackgroundColor="LightGreen"
+                        IsVisible="{Binding IsVisibleButtonCadastrar}"
+                        Command="{Binding AdicionarServicoCommand}"/>
+
+            <Button Text="Alterar"
+                        Padding="15" 
+                        FontSize="18"
+                        CornerRadius="20"
+                        BackgroundColor="LightBlue"
+                        Command="{Binding AlterarServicoCommand}"
+                        IsVisible="{Binding IsVisibleButtonAlterar}"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.AdicionarPetPageView"
+             xmlns:converters="clr-namespace:Vet_App_For_Freelancers.Helpers"
+             xmlns:local="clr-namespace:Vet_App_For_Freelancers.ViewModels"
+             x:DataType="local:AdicionarPetViewModel"
+             x:Name="AddNewPet"
+             Title="Adicionar Novo Pet"
+             Shell.NavBarIsVisible="False">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto ,*, Auto">
+        <Grid IsVisible="{Binding IsLoaded}" Margin="0,30,0,0" Grid.Row="0" HeightRequest="750">
+            <StackLayout Margin="5" Spacing="12" VerticalOptions="CenterAndExpand" >
+                <Frame Padding="10" HasShadow="True" Margin="10,5" Background="White" CornerRadius="10" BorderColor="LightGray">
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+
+                        <Entry x:Name="EntryNomePet" 
+                               Text="{Binding NomePet}"
+                               Placeholder="Nome do Pet" 
+                               IsPassword="False" 
+                               PlaceholderColor="Gray"
+                               Grid.Row="0" 
+                               Margin="5" 
+                               TextColor="Black" 
+                               ClearButtonVisibility="WhileEditing"/>
+                        
+                        <Entry x:Name="EntryMicrochip" 
+                               Text="{Binding Microship}"
+                               Placeholder="Microchip" 
+                               Grid.Row="1" 
+                               IsPassword="False" 
+                               PlaceholderColor="Gray"
+                               Margin="5" 
+                               TextColor="Black" 
+                               ClearButtonVisibility="WhileEditing"/>
+                        <Picker x:Name="especiePicker"
+                                Grid.Row="2" 
+                                Title="Selecione a Espécie" 
+                                TextColor="Black" 
+                                TitleColor="Gray" 
+                                Margin="5"
+                                ItemsSource="{Binding Especies}"
+                                ItemDisplayBinding="{Binding NomeEspecie}"
+                                SelectedItem="{Binding EspecieSelecionada}"/>
+                        <Button Text="+" WidthRequest="40" BackgroundColor="LightGray" HeightRequest="35" Padding="2" Command="{Binding AdicionarEspecie}" Grid.Row="2" Grid.Column="1"/>
+
+                        <Picker x:Name="racaPicker" 
+                                Grid.Row="3"
+                                Title="Selecione a Raça"
+                                TextColor="Black" 
+                                TitleColor="Gray" 
+                                Margin="5"
+                                ItemsSource="{Binding Racas}"
+                                ItemDisplayBinding="{Binding TipoRaca}"
+                                SelectedItem="{Binding RacaSelecionada}"/>
+                        <Button Text="+" WidthRequest="40" BackgroundColor="LightGray" HeightRequest="35" Padding="2" Command="{Binding AdicionarRaca}" Grid.Row="3" Grid.Column="1"/>
+
+                        <Entry x:Name="EntryIdadePet"
+                               Placeholder="Idade do Pet"
+                               Text="{Binding IdadePet}"
+                               Keyboard="Numeric"
+                               Grid.Row="4"
+                               IsPassword="False" 
+                               PlaceholderColor="Gray" 
+                               Margin="5" 
+                               TextColor="Black"
+                               ClearButtonVisibility="WhileEditing"/>
+                        
+                        <Entry x:Name="entryPeso" 
+                               Text="{Binding Peso}"
+                               Placeholder="Peso"
+                               Keyboard="Numeric"
+                               IsPassword="False"
+                               PlaceholderColor="Gray"
+                               Grid.Row="5"
+                               Margin="5" 
+                               TextColor="Black"
+                               ClearButtonVisibility="WhileEditing"/>
+                        
+                        <Picker x:Name="sexagemPicker" Grid.Row="6" Title="Selecione o Sexo" TextColor="Black" TitleColor="Gray" Margin="10" SelectedItem="{Binding SexoPet}">
+                            <Picker.Items>
+                                <x:String>MACHO</x:String>
+                                <x:String>FEMÊA</x:String>
+                            </Picker.Items>
+                        </Picker>
+                    </Grid>
+                </Frame>
+                <Button Text="Cadastrar" 
+                         Padding="20" 
+                         FontSize="18" 
+                         Grid.Row="7" 
+                         Margin="10,0,10,0"
+                         CornerRadius="20"
+                         BackgroundColor="#51EABB"
+                         Command="{Binding AdicionarPet}"/>
+            </StackLayout>
+        </Grid>
+
+        <StackLayout
+                  Margin="1"
+                  HeightRequest="42"
+                  HorizontalOptions="FillAndExpand"
+                  Orientation="Horizontal"
+                  VerticalOptions="StartAndExpand">
+            <Border
+                  Padding="0"
+                  Background="transparent"
+                  HeightRequest="40"
+                  HorizontalOptions="StartAndExpand"
+                  StrokeShape="RoundRectangle 20,20,20,20"
+                  StrokeThickness="0"
+                  WidthRequest="40">
+
+                <Label
+                      FontFamily="MaterialIcon"
+                      FontSize="26"
+                      HorizontalOptions="Center"
+                      TextColor="Black"
+                      VerticalOptions="Center">
+                    <Label.Text>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="Android" Value="&#xf04d;" />
+                            <On Platform="iOS" Value="&#xf141;" />
+                            <On Platform="Default" Value="&#xf04d;" />
+                        </OnPlatform>
+                    </Label.Text>
+                </Label>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"/>
+                </Border.GestureRecognizers>
+            </Border>
+        </StackLayout>
+        <ActivityIndicator
+   HeightRequest="45"
+   HorizontalOptions="Center"
+   IsRunning="{Binding IsLoaded, Converter={StaticResource InverseBoolConverter}}"
+   VerticalOptions="Center"
+   WidthRequest="45"
+   Color="LightCoral" />
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.HomePageView"
+             xmlns:converters="clr-namespace:Vet_App_For_Freelancers.Helpers"
+             x:Name="HomePage"
+             Title="Home Page"
+             Shell.NavBarIsVisible="False">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid Margin="8,12" RowDefinitions="Auto, *">
+        <StackLayout
+        Grid.Row="0"
+        Margin="0"
+        HorizontalOptions="FillAndExpand"
+        IsVisible="{Binding IsLoaded}"
+        Orientation="Horizontal">
+            <Border
+            Margin="0"
+            Padding="0"
+            Background="Transparent"
+            HorizontalOptions="FillAndExpand"
+            StrokeShape="RoundRectangle 22"
+            StrokeThickness="0">
+                <StackLayout
+                    Margin="12,2"
+                    Orientation="Horizontal"
+                    VerticalOptions="CenterAndExpand">
+                    <Label
+                        FontFamily="MaterialIcon"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="&#xf349;"
+                        TextColor="Black"
+                        VerticalOptions="CenterAndExpand" />
+                    <Entry
+                        Margin="8,0"
+                        FontSize="12"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Search Here" 
+                        Text="{Binding SearchQuery}"/>
+                    <Button FontSize="20"
+                            ImageSource="settings.png"
+                            HeightRequest="45"
+                            WidthRequest="45"
+                            BorderColor="LightBlue"
+                            CornerRadius="50"
+                            Padding="10"
+                            BackgroundColor="Transparent"
+                            Command="{Binding CofigCommand}"/>
+                </StackLayout>
+            </Border>
+        </StackLayout>
+        <Grid Grid.Row="1">
+            <Grid IsVisible="{Binding IsLoaded}">
+                <RefreshView Grid.ColumnSpan="1" 
+                         IsRefreshing="{Binding IsRefreshing}" 
+                         Command="{Binding RefreshCommand}" 
+                         RefreshColor="Teal" >
+                    <ScrollView >
+                        <StackLayout Spacing="0">
+                            <Label
+                            Margin="0,12"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalOptions="Start"
+                            HorizontalTextAlignment="Start"
+                            Text="Clientes"
+                            TextColor="Black"
+                            />
+                            <CollectionView
+                            Margin="0,6"
+                            ItemsSource="{Binding FilteredTutores}">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout 
+                                    HorizontalItemSpacing="0"
+                                    Orientation="Vertical"
+                                    />
+                                </CollectionView.ItemsLayout>
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame  Padding="10" HasShadow="True" Margin="10,5" Background="White" CornerRadius="10" BorderColor="LightGray">
+                                            <Grid ColumnDefinitions="Auto, *" RowDefinitions="Auto, Auto, Auto">
+                                                <Image HeightRequest="50" 
+                                                       WidthRequest="50" 
+                                                       Grid.Column="0" 
+                                                       Grid.Row="0" 
+                                                       Margin="0,0,10,0" 
+                                                       Aspect="AspectFill"
+                                                     Source="profile.png"/>
+                                                <Grid ColumnDefinitions="Auto,Auto" 
+                                                      Grid.Column="1" 
+                                                      Grid.Row="0"
+                                                      Margin="0,10,0,0">
+                                                    <Label Text="Tutor: "
+                                                           FontSize="16" 
+                                                           FontAttributes="Bold"
+                                                           TextColor="Gray" 
+                                                           Grid.Column="0" />
+                                                    <Label Text="{Binding NomeTutor}" 
+                                                           FontSize="16" 
+                                                           TextColor="Gray"
+                                                           Grid.Column="1"
+                                                           VerticalTextAlignment="Start"/>
+                                                </Grid>
+
+                                                <Grid ColumnDefinitions="Auto,Auto"
+                                                      Grid.Column="1" 
+                                                      Grid.Row="1"
+                                                       Margin="0,0,0,0">
+                                                    <Label Text="Celular: "
+                                                           FontSize="16" 
+                                                           FontAttributes="Bold" 
+                                                           TextColor="Gray" 
+                                                           Grid.Column="0" />
+                                                    <Label Text="{Binding Celular, StringFormat='{0:(##) #####-####}'}" 
+                                                           FontSize="16" 
+                                                           TextColor="Gray" 
+                                                           Grid.Column="1" />
+                                                </Grid>
+                                            </Grid>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference HomePage}, Path=BindingContext.TutoresTapCommand}" 
+                                                                    CommandParameter="{Binding .}" Tapped="OnItemTapped"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </StackLayout>
+                    </ScrollView>
+                </RefreshView>
+                <Button
+                        FontAttributes="Bold"
+                        BackgroundColor="LightBlue"
+                        CornerRadius="50"
+                        HeightRequest="60"
+                        WidthRequest="60"
+                        HorizontalOptions="End"
+                        VerticalOptions="End"
+                        ImageSource="plus.png"
+                        Padding="20"
+                        Margin="20"
+                        Command="{Binding AddNewTutor}"/>
+            </Grid>
+        </Grid>
+
+        <ActivityIndicator
+            HeightRequest="45"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoaded, Converter={StaticResource InverseBoolConverter}}"
+            VerticalOptions="Center"
+            WidthRequest="45"
+            Color="LightBlue" />
+    </Grid>
+</ContentPage>

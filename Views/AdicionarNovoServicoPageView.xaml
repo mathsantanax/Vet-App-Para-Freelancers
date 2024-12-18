@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.AdicionarNovoServicoPageView"
+             xmlns:helpers="clr-namespace:Vet_App_For_Freelancers.Helpers"
+             xmlns:local="clr-namespace:Vet_App_For_Freelancers.ViewModels"
+             Title="Adicionar Serviço"
+             x:Name="AdicionarServicoPageView"
+             Shell.NavBarIsVisible="False"
+             >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <helpers:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="Auto, Auto,*, Auto">
+        <Grid IsVisible="{Binding IsLoaded}" Margin="0,30,0,0" Grid.Row="0">
+            <StackLayout Margin="10, 0, 0, 25" Spacing="12" VerticalOptions="CenterAndExpand">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="*">
+                    <Label Text="Tutor:"
+                            Grid.Row="0"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            TextColor="Gray"/>
+                    <Label Text="{Binding TutorView.NomeTutor}"
+                            Grid.Row="1"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            HorizontalOptions="StartAndExpand"/>
+                    <Label Text="Pet:"
+                            Grid.Row="2"
+                            FontAttributes="Bold"
+                            FontSize="12"
+                            TextColor="Gray"/>
+                    <Label Text="{Binding PetView.NomePet}"
+                            Grid.Row="3"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            HorizontalOptions="StartAndExpand"/>
+                </Grid>
+            </StackLayout>
+        </Grid>
+
+        <Grid  IsVisible="{Binding IsLoaded}" Margin="0,15,0,0" Grid.Row="1">
+            <StackLayout Margin="5" Spacing="12" VerticalOptions="CenterAndExpand" >
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
+                        <Picker Title="Selecione um Serviço"
+                             ItemsSource="{Binding ObservableServico}"
+                             ItemDisplayBinding="{Binding NomeService}"
+                             SelectedItem="{Binding ServicoSelecionado}"
+                             WidthRequest="250"
+                             TextColor="Black"
+                             TitleColor="Gray"
+                             Margin="5"/>
+                        <Label Text="{Binding TotalServicos, StringFormat='R$ {0:F2}'}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                               Margin="0, 0, 25, 0"
+                            FontAttributes="Bold"
+                            FontSize="16"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" ColumnDefinitions="Auto, Auto, Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                        <Button FontSize="20"
+                                IsVisible="{Binding IsLoadedItemServico}"
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 ImageSource="minus.png"
+                                 HeightRequest="40"
+                                 WidthRequest="40"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding RemoverQuantidadeServicosCommand}"/>
+                        <Label Text="{Binding QuantidadeServicos}"
+                               IsVisible="{Binding IsLoadedItemServico}"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                WidthRequest="25"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                FontAttributes="Bold"
+                                FontSize="20"/>
+                        <Button FontSize="20"
+                                IsVisible="{Binding IsLoadedItemServico}"
+                                 Grid.Row="0"
+                                 Grid.Column="2"
+                                 ImageSource="plusadd.png"
+                                 HeightRequest="40"
+                                 WidthRequest="40"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding AdicionarQuantidadeServicosCommand}"/>
+                        <Button Text="Adicionar"
+                                IsVisible="{Binding IsLoadedItemServico}"
+                                 FontSize="20"
+                                 Grid.Row="0"
+                                 Grid.Column="3"
+                                 WidthRequest="150"
+                                 BackgroundColor="LightGreen"
+                                 HorizontalOptions="EndAndExpand"
+                                 Margin="0, 0, 10, 0"
+                                 Command="{Binding AdicionarServico}"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2" ColumnDefinitions="Auto, *">
+                        <Picker x:Name="ProdutoPicker"
+                                ItemsSource="{Binding ObservableProdutos}"
+                                ItemDisplayBinding="{Binding NomePruduto}"
+                                SelectedItem="{Binding ProdutoSelecionado}"
+                                Grid.Row="0" 
+                                Grid.Column="0"
+                                WidthRequest="250" 
+                                Title="Selecione o Produto" 
+                                TextColor="Black" 
+                                TitleColor="Gray"
+                                Margin="5"/>
+                        <Label Text="{Binding TotalProdutos, StringFormat='R$ {0:F2}'}"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="CenterAndExpand"
+                                Margin="0, 0, 25, 0"
+                                FontAttributes="Bold"
+                                FontSize="16"/>
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="Auto, Auto, Auto, *" RowDefinitions="Auto, Auto, Auto, Auto">
+                        <Button FontSize="20"
+                                IsVisible="{Binding IsLoadedItemProduto}"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             ImageSource="minus.png"
+                             HeightRequest="40"
+                             WidthRequest="40"
+                             BackgroundColor="Transparent"
+                             Command="{Binding RemoverQuantidadeProdutosCommand}"/>
+                        <Label Text="{Binding QuantidadeProdutos}"
+                               IsVisible="{Binding IsLoadedItemProduto}"
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            WidthRequest="25"
+                            VerticalOptions="CenterAndExpand"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Bold"
+                            FontSize="20"/>
+                        <Button FontSize="20"
+                                IsVisible="{Binding IsLoadedItemProduto}"
+                             Grid.Row="0"
+                             Grid.Column="2"
+                             ImageSource="plusadd.png"
+                             HeightRequest="40"
+                             WidthRequest="40"
+                             BackgroundColor="Transparent"
+                             Command="{Binding AdicionarQuantidadeProdutosCommand}"/>
+                        <Button Text="Adicionar"
+                                IsVisible="{Binding IsLoadedItemProduto}"
+                                 FontSize="20"
+                                 Grid.Row="0"
+                                 Grid.Column="3"
+                                 WidthRequest="150"
+                                 BackgroundColor="LightGreen"
+                                HorizontalOptions="EndAndExpand"
+                                Margin="0, 0, 10, 0"
+                                 Command="{Binding AdicionarProdutos}"/>
+                    </Grid>
+
+                    <Grid Grid.Row="4" RowDefinitions="Auto, Auto,*">
+                        <Label Text="Itens"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            TextColor="Orange"
+                            Grid.Row="0"/>
+                        <Grid Grid.Row="1" ColumnDefinitions="*, Auto, Auto, Auto">
+                            <Label Text="Descrição"
+                                Grid.Column="0"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                Margin="20, 0, 0, 0"/>
+                            <Label Text="Quantidade"
+                                Grid.Column="1"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                Margin="0, 0, 0, 0"/>
+                            <Label Text="Unitário"
+                                Grid.Column="2"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                Margin="20, 0, 0, 0"/>
+                            <Label Text="Total"
+                                Grid.Column="3"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                Margin="20, 0, 50, 0"/>
+                        </Grid>
+                        <Frame Grid.Row="2" Padding="10" BackgroundColor="White" CornerRadius="10" BorderColor="LightGray" HasShadow="True">
+                            <CollectionView ItemsSource="{Binding ApresentacaoItems}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame Padding="7" BackgroundColor="LightGray" Margin="2">
+                                            <Grid ColumnDefinitions="Auto, Auto, Auto, *">
+                                                <Label Grid.Column="0" WidthRequest="155" HorizontalOptions="CenterAndExpand" Text="{Binding Nome}" FontSize="11" FontAttributes="Bold" TextColor="Black"/>
+                                                <Label Grid.Column="1" WidthRequest="65" HorizontalOptions="CenterAndExpand" Text="{Binding Quantidade}" FontSize="11" TextColor="Black"/>
+                                                <Label Grid.Column="2" HorizontalOptions="CenterAndExpand" Text="{Binding Preco, StringFormat='R$ {0:N2}'}" FontSize="11" TextColor="Black"/>
+                                                <Label Grid.Column="3" HorizontalOptions="CenterAndExpand" Text="{Binding Total, StringFormat='R$ {0:N2}'}" FontSize="11" TextColor="Black"/>
+                                            </Grid>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Frame>
+                    </Grid>
+                </Grid>
+
+            </StackLayout>
+        </Grid>
+
+        <StackLayout IsVisible="{Binding IsLoadedDesc}" VerticalOptions="EndAndExpand" HeightRequest="110" BackgroundColor="LightCyan" Grid.Row="2" >
+
+            <Grid ColumnDefinitions="Auto, *, *">
+                <Label Text="Desconto: "
+                    Grid.Column="0"
+                    TextColor="Black"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="10, 0, 0, 0"/>
+                <Entry x:Name="EntryDesconto"
+                       Text="{Binding Desconto}"
+                     Placeholder="Valor"
+                     Keyboard="Numeric"
+                     ClearButtonVisibility="WhileEditing"
+                     IsPassword="False"
+                     WidthRequest="140"
+                     FontSize="16"
+                     Grid.Column="1"
+                     TextColor="Black"/>
+                <Button Text="Adicionar" 
+                     Padding="10" 
+                     FontSize="15" 
+                     Grid.Column="3"
+                     CornerRadius="10"
+                     WidthRequest="120"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     Margin="0, 5, 7, 0"
+                     TextColor="Black"
+                     FontAttributes="Bold"
+                     BackgroundColor="LightSkyBlue"
+                        Command="{Binding AdicionarDesconto}"/>
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, *, *">
+                <Label Text="Total: "
+                    Grid.Column="0"
+                    TextColor="Black"
+                    FontSize="20"
+                    FontAttributes="Bold"
+                    VerticalOptions="CenterAndExpand"
+                    Margin="10"/>
+                <Label Text="{Binding Amount, StringFormat='R$ {0:F2}'}"
+                    Grid.Column="1"
+                    FontSize="25"
+                    VerticalOptions="CenterAndExpand"
+                    HorizontalOptions="CenterAndExpand"/>
+                <Button Text="Finalizar" 
+                     Padding="10" 
+                     FontSize="15" 
+                     Grid.Column="3"
+                     CornerRadius="10"
+                     WidthRequest="120"
+                     VerticalOptions="CenterAndExpand"
+                     HorizontalOptions="CenterAndExpand"
+                     Margin="5"
+                     TextColor="Black"
+                     FontAttributes="Bold"
+                     BackgroundColor="LightBlue"
+                />
+            </Grid>
+        </StackLayout>
+
+
+        <StackLayout
+      Margin="1"
+      HeightRequest="42"
+      HorizontalOptions="FillAndExpand"
+      Orientation="Horizontal"
+      VerticalOptions="StartAndExpand">
+            <Border
+          Padding="0"
+          Background="transparent"
+          HeightRequest="40"
+          HorizontalOptions="StartAndExpand"
+          StrokeShape="RoundRectangle 20,20,20,20"
+          StrokeThickness="0"
+          WidthRequest="40">
+
+                <Label
+              FontFamily="MaterialIcon"
+              FontSize="26"
+              HorizontalOptions="Center"
+              TextColor="Black"
+              VerticalOptions="Center">
+                    <Label.Text>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="Android" Value="&#xf04d;" />
+                            <On Platform="iOS" Value="&#xf141;" />
+                            <On Platform="Default" Value="&#xf04d;" />
+                        </OnPlatform>
+                    </Label.Text>
+                </Label>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"/>
+                </Border.GestureRecognizers>
+            </Border>
+        </StackLayout>
+        <ActivityIndicator
+           HeightRequest="45"
+           HorizontalOptions="Center"
+           IsRunning="{Binding IsLoaded, Converter={StaticResource InverseBoolConverter}}"
+           VerticalOptions="Center"
+           WidthRequest="45"
+           Color="LightCoral" />
+    </Grid>
+</ContentPage>
