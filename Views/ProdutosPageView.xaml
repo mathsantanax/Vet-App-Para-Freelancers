@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.ProdutosPageView"
+             x:Name="ProdutosPage"
+             Shell.NavBarIsVisible="True"
+             Title="Produtos">
+
+    <Grid RowDefinitions="Auto, Auto, Auto">
+        <Frame Grid.Row="0" Padding="0" HasShadow="True" Margin="10, 10, 10, 10" BorderColor="LightGray">
+            <Grid RowDefinitions="Auto, Auto">
+                <StackLayout Grid.Row="0" Orientation="Horizontal" Spacing="25" Background="LightGray">
+                    <Label Text="Produtos" Margin="5" FontAttributes="Bold" WidthRequest="100" HorizontalTextAlignment="Center" Padding="2"/>
+                    <Label Text="Laborátorio" Margin="5" FontAttributes="Bold" WidthRequest="100" HorizontalTextAlignment="Center" Padding="2"/>
+                    <Label Text="Preço" Margin="5" FontAttributes="Bold" WidthRequest="100" HorizontalTextAlignment="Center" Padding="2"/>
+                </StackLayout>
+
+                <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="40">
+                    <CollectionView ItemsSource="{Binding ProdutosColletion}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame Padding="0" CornerRadius="0" HasShadow="False" Margin="0" BorderColor="Transparent">
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="35" Padding="5">
+                                        <Label Text="{Binding NomePruduto}" WidthRequest="100" HorizontalTextAlignment="Center"/>
+                                        <Label Text="Zoetis" WidthRequest="100" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Preco, StringFormat='R$ {0:F2}'}" WidthRequest="100" HorizontalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Grid>
+        </Frame>
+        
+        <StackLayout Grid.Row="1" Margin="10" Spacing="10">
+            <Label Text="Cadastrar Laboratório:"/>
+            <Grid ColumnDefinitions="*, Auto">
+                <Entry Text="{Binding NomeLaboratorio}" Grid.Column="0" Placeholder="Laboratório" PlaceholderColor="Gray"/>
+                <Button Grid.Column="1" Text="Cadastrar Laboratório" CornerRadius="50" BackgroundColor="LightBlue" TextColor="Black" Command="{Binding AdicionarLaboratorioCommand}" IsVisible="{Binding IsVisibleButtonLab}"/>
+            </Grid>
+        </StackLayout>
+        
+    </Grid>
+</ContentPage>

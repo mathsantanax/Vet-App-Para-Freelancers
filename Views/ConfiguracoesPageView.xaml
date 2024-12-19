@@ -26,7 +26,8 @@
                             FontSize="16"
                             Background="LightGray"
                             TextColor="Black"
-                            Padding="5"/>
+                            Padding="5"
+                            Command="{Binding ProdutosCommand}"/>
                 </VerticalStackLayout>
 
                 <!-- Seção: Notificações -->

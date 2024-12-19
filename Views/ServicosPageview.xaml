@@ -5,8 +5,7 @@
              x:Class="Vet_App_For_Freelancers.Views.ServicosPageview"
              x:Name="ServicosPageView"
              Shell.NavBarIsVisible="True"
-             Title="Serviços
-             ">
+             Title="Serviços">
 
     <Grid RowDefinitions="Auto, Auto">
         <Frame Grid.Row="0" Padding="0" HasShadow="True" Margin="10, 10, 10, 10" BorderColor="LightGray">

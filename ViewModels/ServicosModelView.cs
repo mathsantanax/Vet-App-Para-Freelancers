@@ -98,7 +98,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", "Erro ao selecionar o serviço", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao selecionar o serviço. \n {ex.Message}", "Ok");
             }
             finally
             {

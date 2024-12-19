@@ -20,6 +20,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             FecharAppCommand = new Command(FecharApp);
             ServicosCommand = new Command(ServicosPage);
+            ProdutosCommand = new Command(ProdutosPage);
         }
 
         public async void ServicosPage()
@@ -30,13 +31,20 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch(Exception ex)
             {
-                throw ex;
+                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
         }
 
         public async void ProdutosPage()
         {
-
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushAsync(new ProdutosPageView());
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+            }
         }
 
         public async void FecharApp()
