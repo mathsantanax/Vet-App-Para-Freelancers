@@ -15,7 +15,7 @@
         </Tab>
         <Tab Title="Relátorio" Icon="price.png">
             <ShellContent 
-        ContentTemplate="{DataTemplate local:HomePageView}"
+        ContentTemplate="{DataTemplate local:FinalizarNovoServicoPageView}"
         Route="Relatorio"/>
         </Tab>
     </TabBar>

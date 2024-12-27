@@ -283,12 +283,12 @@
 
 
         <StackLayout
-      Margin="1"
-      HeightRequest="42"
-      HorizontalOptions="FillAndExpand"
-      Orientation="Horizontal"
-      VerticalOptions="StartAndExpand">
-            <Border
+              Margin="1"
+              HeightRequest="42"
+              HorizontalOptions="FillAndExpand"
+              Orientation="Horizontal"
+              VerticalOptions="StartAndExpand">
+                <Border
           Padding="0"
           Background="transparent"
           HeightRequest="40"
