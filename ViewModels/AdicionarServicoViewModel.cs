@@ -14,6 +14,7 @@ using Vet_App_For_Freelancers.DataAccess;
 using Vet_App_For_Freelancers.Models.ModelPetETutor;
 using Vet_App_For_Freelancers.Models.ModelServicos;
 using Vet_App_For_Freelancers.Presentation;
+using Vet_App_For_Freelancers.Views;
 
 namespace Vet_App_For_Freelancers.ViewModels
 {
@@ -23,6 +24,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private readonly ServicoDataAccess _servicoDataAccess;
         private readonly ProdutoDataAccess _produtoDataAccess;
+        private readonly LaboratorioDataAccess _laboratorioDataAccess;
 
         [ObservableProperty]
         public Tutor tutorView;
@@ -61,6 +63,16 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         [ObservableProperty]
         private decimal desconto;
+
+        private decimal _TotalAmout;
+        public decimal TotalAmout
+        {
+            get => _TotalAmout;
+            set
+            {
+                SetProperty(ref _TotalAmout, value);
+            }
+        }
 
         [ObservableProperty]
         private int quantidadeServicos = 1;
@@ -125,10 +137,13 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         public ICommand AdicionarDesconto { get; }
 
+        public ICommand FinalizarCommand { get; }
+
         public AdicionarServicoViewModel(Tutor tutor, Pet pet)
         {
             _servicoDataAccess = new ServicoDataAccess(_connection);
             _produtoDataAccess = new ProdutoDataAccess(_connection);
+            _laboratorioDataAccess = new LaboratorioDataAccess(_connection);
 
             ObservableServico = new ObservableCollection<Servico>();
             ObservableProdutos = new ObservableCollection<Produto>();
@@ -149,6 +164,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             AdicionarQuantidadeProdutosCommand = new Command(() => AlterarQuantidadeProdutos(1));
             RemoverQuantidadeProdutosCommand = new Command(() => AlterarQuantidadeProdutos(-1));
             BackCommand = new Command<object>(GoBack);
+            FinalizarCommand = new Command(async() => await FinalizarAsync());
 
             Task.Run(async () => await InitializeAsync());
         }
@@ -157,6 +173,18 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             await GetServicos();
             await GetProdutos();
+        }
+
+        private async Task FinalizarAsync()
+        {
+            try
+            {
+                await Application.Current.MainPage.Navigation.PushModalAsync(new FinalizarNovoServicoPageView(tutorView, petView, amount, desconto, itemAtendimentos, itemServicos));
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Erro ao carregar serviços: {ex.Message}");
+            }
         }
 
         private async Task GetProdutos()
@@ -243,15 +271,22 @@ namespace Vet_App_For_Freelancers.ViewModels
             TotalProdutos = ProdutoSelecionado?.Preco ?? 0;
         }
 
+        private void AtualizarTotal()
+        {
+            TotalAmout = Amount - Desconto;
+        }
+
         private async Task InsertDesconto()
         {
             if (Desconto > Amount)
             {
-                Desconto = Amount;
+                await App.Current.MainPage.DisplayAlert("Alerta", "Desconto não pode ser maior que total de serviço", "ok");
             }
-            Amount -= Desconto;
+            else
+            {
+                AtualizarTotal();
+            }
         }
-
         private async Task InsertServiceOnItemServicoAsync()
         {
             if(ServicoSelecionado != null)
@@ -274,6 +309,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 });
 
                 Amount += TotalServicos;
+                AtualizarTotal();
                 ServicoSelecionado = null;
                 QuantidadeServicos = 1;
                 TotalServicos = 00.00m;
@@ -304,6 +340,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 });
 
                 Amount += TotalProdutos;
+                AtualizarTotal();
                 ProdutoSelecionado = null;
                 QuantidadeProdutos = 1;
                 TotalProdutos = 00.00m;
