@@ -18,7 +18,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         public Pet petView;
 
         public ICommand BackCommand { get; }
-        public FinalizarNovoServicoModelView() 
+        public FinalizarNovoServicoModelView(Tutor tutorView, Pet petView,)
         {
             Task.Run(async () => await InitializeAsync());
 
