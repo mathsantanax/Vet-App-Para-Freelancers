@@ -260,7 +260,7 @@
                     FontAttributes="Bold"
                     VerticalOptions="CenterAndExpand"
                     Margin="10"/>
-                <Label Text="{Binding Amount, StringFormat='R$ {0:F2}'}"
+                <Label Text="{Binding TotalAmout, StringFormat='R$ {0:F2}'}"
                     Grid.Column="1"
                     FontSize="25"
                     VerticalOptions="CenterAndExpand"
@@ -277,6 +277,7 @@
                      TextColor="Black"
                      FontAttributes="Bold"
                      BackgroundColor="LightBlue"
+                     Command="{Binding FinalizarCommand}"
                 />
             </Grid>
         </StackLayout>

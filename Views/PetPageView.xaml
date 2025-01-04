@@ -106,14 +106,14 @@
                 FontSize="22"
                 HorizontalOptions="CenterAndExpand"/>
 
-                    <CollectionView>
+                    <CollectionView ItemsSource="{Binding atendimentosCollection}">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="12" Orientation="Vertical"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Frame  Padding="10" HasShadow="True" Margin="10,5" CornerRadius="10" BackgroundColor="White" BorderColor="LightGray">
-                                    <Label Text="I ghosted to the down cool"/>
+                                    <Label Text="{Binding ValorTotal}"/>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>

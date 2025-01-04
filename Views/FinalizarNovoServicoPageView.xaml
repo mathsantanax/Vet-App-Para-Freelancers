@@ -12,8 +12,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto, Auto, *">
-        <Grid IsVisible="{Binding IsLoaded}" Margin="0,30,0,0" Grid.Row="0">
+    <Grid IsVisible="{Binding IsLoaded}" RowDefinitions="Auto, Auto, *">
+        <Grid Margin="0,30,0,0" Grid.Row="0">
             <StackLayout Margin="10, 25, 0, 0" Spacing="12" VerticalOptions="StartAndExpand">
                 <Grid RowDefinitions="Auto, Auto, Auto, Auto, *" ColumnDefinitions="*">
                     <Label Text="Tutor:"
@@ -21,7 +21,7 @@
                     FontAttributes="Bold"
                     FontSize="12"
                     TextColor="Gray"/>
-                    <Label Text="Matheus Augusto Santana"
+                    <Label Text="{Binding TutorView.NomeTutor}"
                     Grid.Row="1"
                     FontAttributes="Bold"
                     FontSize="15"
@@ -31,7 +31,7 @@
                     FontAttributes="Bold"
                     FontSize="12"
                     TextColor="Gray"/>
-                    <Label Text="Maskara"
+                    <Label Text="{Binding PetView.NomePet}"
                     Grid.Row="3"
                     FontAttributes="Bold"
                     FontSize="15"
@@ -40,7 +40,7 @@
             </StackLayout>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" IsVisible="{Binding ItensLoaded}">
             <StackLayout>
                 <Label Text="Itens"
                        FontSize="16"
@@ -48,16 +48,24 @@
                        HorizontalTextAlignment="Center"/>
                 <Grid>
                     <Frame Grid.Row="2" Padding="10" BackgroundColor="White" CornerRadius="10" BorderColor="LightGray" HasShadow="True">
-                        <Grid>
-                            <Label Text="vacinação"/>
-                            <Label Text="vacinação"/>
-                            <Label Text="vacinação"/>
-                            <Label Text="vacinação"/>
-                        </Grid>
+                        <CollectionView ItemsSource="{Binding ApresentacaoItems}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="7" BackgroundColor="LightGray" Margin="2">
+                                        <Grid ColumnDefinitions="Auto, Auto, Auto, *">
+                                            <Label Grid.Column="0" WidthRequest="155" HorizontalOptions="CenterAndExpand" Text="{Binding Nome}" FontSize="11" FontAttributes="Bold" TextColor="Black"/>
+                                            <Label Grid.Column="1" WidthRequest="65" HorizontalOptions="CenterAndExpand" Text="{Binding Quantidade}" FontSize="11" TextColor="Black"/>
+                                            <Label Grid.Column="2" HorizontalOptions="CenterAndExpand" Text="{Binding Preco, StringFormat='R$ {0:N2}'}" FontSize="11" TextColor="Black"/>
+                                            <Label Grid.Column="3" HorizontalOptions="CenterAndExpand" Text="{Binding Total, StringFormat='R$ {0:N2}'}" FontSize="11" TextColor="Black"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
                     </Frame>
                 </Grid>
 
-                <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="2">
+                <Grid RowDefinitions="Auto, Auto, Auto" RowSpacing="2" BackgroundColor="LightSkyBlue" Padding="10" IsVisible="{Binding IsLoadedData}">
                     <Label Text="Selecione a Data da Próxima Vacinação"
                            FontSize="14"
                            Margin="5"
@@ -66,45 +74,57 @@
                     <DatePicker FontAttributes="Bold" 
                                 FontSize="16" 
                                 HorizontalOptions="CenterAndExpand"
-                                Grid.Row="1"/>
+                                Grid.Row="1"
+                                Date="{Binding Date, Mode=TwoWay}"/>
                 </Grid>
 
             </StackLayout>
         </Grid>
 
-        <Grid Grid.Row="3" VerticalOptions="EndAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="5">
+        <Grid Grid.Row="3" VerticalOptions="EndAndExpand" RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
 
-            <Grid Grid.Row="0" RowDefinitions="Auto, Auto" BackgroundColor="LightBlue">
+            <Grid Grid.Row="0">
+                <Picker Title="Forma de Pagamento"
+                        TitleColor="Gray"
+                        HorizontalTextAlignment="Center"
+                        BackgroundColor="GhostWhite"
+                        Margin="5"
+                        ItemsSource="{Binding Pagamentos}"
+                        ItemDisplayBinding="{Binding MetodoPagamento}"
+                        SelectedItem="{Binding PagamentoSelecionado}"/>
+            </Grid>
+
+            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="1" RowDefinitions="Auto, Auto" BackgroundColor="LightBlue">
                 <Label Text="Total em Itens:"
                        Grid.Row="0"
                        FontSize="16"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"/>
-                <Label Text="R$ 260,00"
-                       Grid.Row="1"
-                       FontSize="20"
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Center"/>
-            </Grid>           
-            <Grid Grid.Row="1" RowDefinitions="Auto, Auto" BackgroundColor="LightPink">
-                <Label Text="Desconto:"
-                       Grid.Row="0"
-                       FontSize="16"
-                       FontAttributes="Bold"
-                       HorizontalTextAlignment="Center"/>
-                <Label Text="R$ 60,00"
+                <Label Text="{Binding Amout, StringFormat='R$ {0:F2}'}"
                        Grid.Row="1"
                        FontSize="20"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"/>
             </Grid>
-            <Grid Grid.Row="2" RowDefinitions="Auto, Auto" BackgroundColor="LightGreen">
+            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="2" RowDefinitions="Auto, Auto" BackgroundColor="LightPink">
+                <Label Text="Desconto:"
+                       Grid.Row="0"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding Desconto, StringFormat='R$ {0:F2}'}"
+                       Grid.Row="1"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="3" RowDefinitions="Auto, Auto" BackgroundColor="LightGreen">
                 <Label Text="Total:"
                        Grid.Row="0"
                        FontSize="16"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"/>
-                <Label Text="R$ 200,00"
+                <Label Text="{Binding TotalAmout, StringFormat='R$ {0:F2}'}"
                        Grid.Row="1"
                        FontSize="20"
                        FontAttributes="Bold"
@@ -112,13 +132,14 @@
             </Grid>
 
             <Button VerticalOptions="EndAndExpand"
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Margin="10"
                     Text="Finalizar"
                     FontSize="16"
                     TextColor="Black"
                     FontAttributes="Bold"
-                    BackgroundColor="LightSkyBlue"/>
+                    BackgroundColor="LightSkyBlue"
+                    Command="{Binding FinalizarCommand}"/>
         </Grid>
 
         <StackLayout
