@@ -81,9 +81,20 @@
             </StackLayout>
         </Grid>
 
-        <Grid Grid.Row="3" VerticalOptions="EndAndExpand" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="5">
+        <Grid Grid.Row="3" VerticalOptions="EndAndExpand" RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
 
-            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="0" RowDefinitions="Auto, Auto" BackgroundColor="LightBlue">
+            <Grid Grid.Row="0">
+                <Picker Title="Forma de Pagamento"
+                        TitleColor="Gray"
+                        HorizontalTextAlignment="Center"
+                        BackgroundColor="GhostWhite"
+                        Margin="5"
+                        ItemsSource="{Binding Pagamentos}"
+                        ItemDisplayBinding="{Binding MetodoPagamento}"
+                        SelectedItem="{Binding PagamentoSelecionado}"/>
+            </Grid>
+
+            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="1" RowDefinitions="Auto, Auto" BackgroundColor="LightBlue">
                 <Label Text="Total em Itens:"
                        Grid.Row="0"
                        FontSize="16"
@@ -95,7 +106,7 @@
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"/>
             </Grid>
-            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="1" RowDefinitions="Auto, Auto" BackgroundColor="LightPink">
+            <Grid IsVisible="{Binding DescontoLoaded}" Grid.Row="2" RowDefinitions="Auto, Auto" BackgroundColor="LightPink">
                 <Label Text="Desconto:"
                        Grid.Row="0"
                        FontSize="16"
@@ -107,7 +118,7 @@
                        FontAttributes="Bold"
                        HorizontalTextAlignment="Center"/>
             </Grid>
-            <Grid Grid.Row="2" RowDefinitions="Auto, Auto" BackgroundColor="LightGreen">
+            <Grid Grid.Row="3" RowDefinitions="Auto, Auto" BackgroundColor="LightGreen">
                 <Label Text="Total:"
                        Grid.Row="0"
                        FontSize="16"
@@ -121,13 +132,14 @@
             </Grid>
 
             <Button VerticalOptions="EndAndExpand"
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Margin="10"
                     Text="Finalizar"
                     FontSize="16"
                     TextColor="Black"
                     FontAttributes="Bold"
-                    BackgroundColor="LightSkyBlue"/>
+                    BackgroundColor="LightSkyBlue"
+                    Command="{Binding FinalizarCommand}"/>
         </Grid>
 
         <StackLayout

@@ -20,7 +20,14 @@ namespace Vet_App_For_Freelancers.ViewModels
     {
         SQLiteConnection _connection = DatabaseConfig.GetConnection();
 
-        private readonly LaboratorioDataAccess _laboratorioDataAccess;
+        private readonly AtendimentoDataAccess _atendimentoDataAccess;
+        private readonly ProdutosAtendimentoDataAccess _produtosAtendimentoDataAccess;
+        private readonly ServicosAtendimentoDataAccess _servicosAtendimentoDataAccess;
+        private readonly ProxVacinacaoAtendimentoDataAccess _proxVacinacaoAtendimentoDataAccess;
+
+        private readonly PagamentoDataAccess _pagamentoDataAccess;
+
+        private Atendimento Atendimento;
 
         [ObservableProperty]
         public Tutor tutorView;
@@ -31,10 +38,21 @@ namespace Vet_App_For_Freelancers.ViewModels
         [ObservableProperty]
         private decimal amout;
 
+        private Pagamento pagamentoSelecionado;
+        public Pagamento PagamentoSelecionado
+        {
+            get => pagamentoSelecionado;
+            set
+            {
+                SetProperty(ref pagamentoSelecionado, value);
+            }
+        }
 
         public ObservableCollection<ItemServico> itemServicos { get; set; }
         public ObservableCollection<ItemAtendimento> itemAtendimentos { get; set; }
         public ObservableCollection<ServicoPresentation> ApresentacaoItems { get; set; }
+
+        public ObservableCollection<Pagamento> Pagamentos { get; set; }
 
         private decimal _Desconto;
 
@@ -90,17 +108,21 @@ namespace Vet_App_For_Freelancers.ViewModels
             set 
             {
                 SetProperty(ref _Date, value);
-                MostrarData();
             } 
         }
 
+        private bool FezVacinacao;
 
+        public ICommand FinalizarCommand { get; }
         public ICommand BackCommand { get; }
         public FinalizarNovoServicoModelView(Tutor tutor, Pet pet, decimal amout, decimal desconto, ObservableCollection<ItemAtendimento> atendimentosItem, ObservableCollection<ItemServico> servicosItem) 
         {
-            _laboratorioDataAccess = new LaboratorioDataAccess(_connection);
+            _pagamentoDataAccess = new PagamentoDataAccess(_connection);
             ApresentacaoItems = new ObservableCollection<ServicoPresentation>();
-
+            Pagamentos = new ObservableCollection<Pagamento>();
+            BackCommand = new Command<object>(GoBack);
+            FinalizarCommand = new Command(async () => await FinalizarAsync());
+            Atendimento = new Atendimento();
 
             tutorView = tutor;
             petView = pet;
@@ -111,37 +133,57 @@ namespace Vet_App_For_Freelancers.ViewModels
 
             Date = DateTime.Today;
 
-            Task.Run(async () => await InitializeAsync());
+            Task.Run(async () => await InitializeAsync()).ContinueWith(t =>
+            {
+                if (t.Exception != null)
+                {
+                    Debug.WriteLine($"Erro na inicialização: {t.Exception.Message}");
+                }
+            });
 
-            BackCommand = new Command<object>(GoBack);
         }
 
-        private async void GoBack(object obj)
-        {
-            await Application.Current.MainPage.Navigation.PopModalAsync();
-
-        } 
 
         private async Task InitializeAsync()
         {
             await PresentationAsync();
+            await GetPagamento();
         }
 
-        private async void MostrarData()
+        private async Task GetPagamento()
         {
-            await App.Current.MainPage.DisplayAlert("Alerta",$"{Date}", "Ok");
+            await Task.Delay(100);
+            try
+            {
+                Pagamentos.Clear();
+                var pagamentos = _pagamentoDataAccess.GetAll();
+                if (pagamentos != null && pagamentos.Any())
+                {
+                    foreach (var pagamento in pagamentos)
+                    {
+                        Pagamentos.Add(pagamento);
+                    }
+                    Debug.WriteLine($"Total de pagamentos carregados: {Pagamentos.Count}");
+                }
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao carregar pagamentos: {ex.Message}", "OK");
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private async Task PresentationAsync()
         {
-            await Task.Delay(500);
+            await Task.Delay(100);
             try
             {
                 foreach(var servico in itemServicos)
                 {
-                    if(servico.Nome == "VACINAÇÃO")
+                    if(string.Equals(servico.Nome, "VACINAÇÃO", StringComparison.OrdinalIgnoreCase))
                     {
                         IsLoadedData = true;
+                        FezVacinacao = true;
                     }
                     ApresentacaoItems.Add(new ServicoPresentation
                     {
@@ -172,5 +214,139 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        private async void GoBack(object obj)
+        {
+            await Application.Current.MainPage.Navigation.PopModalAsync();
+
+        }
+
+        private async Task FinalizarAsync()
+        {
+            await Task.Delay(100);
+            try
+            {
+
+                if (CadastrarAtendimento())
+                {
+                    CadastrarItensDeServico();
+                    CadastrarItensDeProdutos();
+                    if(FezVacinacao == true)
+                    {
+                        CadastrarProximaVacinacao();
+                    }
+                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Venda Finalizada", "Ok");
+                    await Application.Current.MainPage.Navigation.PopModalAsync();
+                }
+                else
+                {
+                    await Application.Current.MainPage.DisplayAlert("Alerta", "Houve um Problema.", "Ok");
+                }
+
+            }
+            catch(Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alerta", $"{ex.Message}", "OK");
+            }
+        }
+
+        private bool CadastrarAtendimento()
+        {
+            // Verificando se o método de pagamento foi selecionado
+            if (string.IsNullOrEmpty(PagamentoSelecionado?.MetodoPagamento))
+            {
+                // Caso o método de pagamento não tenha sido selecionado
+                Application.Current.MainPage.DisplayAlert("Alerta", "Selecione a Forma de Pagamento", "OK");
+                return false;
+            }
+
+            // Caso o método de pagamento tenha sido selecionado
+            Atendimento.Data = DateTime.Now.Date;
+            Atendimento.Desconto = Desconto;
+            Atendimento.FezVacinacao = FezVacinacao;
+            Atendimento.ValorTotal = Amout;
+            Atendimento.IdPagamento = PagamentoSelecionado.Id;
+            Atendimento.IdTutor = TutorView.Id;
+            Atendimento.IdPet = PetView.Id;
+
+            try
+            {
+                // Inserir atendimento no banco de dados
+                _atendimentoDataAccess.Insert(Atendimento);
+                Application.Current.MainPage.DisplayAlert("Codigo de Atendimento", $"{Atendimento.Id}", "OK");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Caso ocorra um erro durante a inserção
+                Debug.WriteLine(ex.Message);
+                Application.Current.MainPage.DisplayAlert("Erro", "Erro ao cadastrar o atendimento", "OK");
+                return false;
+            }
+
+        }
+
+        private void CadastrarProximaVacinacao()
+        {
+            try
+            {
+                _proxVacinacaoAtendimentoDataAccess.Insert(new Vacinacao
+                {
+                    DataProxima = Date,
+                    IdPet = PetView.Id,
+                    IdAtendimento = Atendimento.Id,
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void CadastrarItensDeProdutos()
+        {
+            try
+            {
+                foreach (var produto in itemAtendimentos)
+                {
+                    _produtosAtendimentoDataAccess.Insert(new ItemAtendimento
+                    {
+                        Nome = produto.Nome,
+                        Quantidade = produto.Quantidade,
+                        Preco = produto.Preco,
+                        Total = produto.Total,
+                        IdProduto = produto.IdProduto,
+                        IdAtendimento = Atendimento.Id
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void CadastrarItensDeServico()
+        {
+            try
+            {
+                foreach(var servico in itemServicos)
+                {
+                    _servicosAtendimentoDataAccess.Insert(
+                        new ItemServico
+                        {
+                            Nome = servico.Nome,
+                            Quantidade = servico.Quantidade,
+                            Preco = servico.Preco,
+                            Total = servico.Total,
+                            IdAtendimento = Atendimento.Id,
+                            IdServico = servico.IdServico
+                        });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
     }
 }
