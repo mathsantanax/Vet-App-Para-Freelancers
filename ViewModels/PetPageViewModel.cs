@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -35,7 +37,8 @@ namespace Vet_App_For_Freelancers.ViewModels
             set => SetProperty(ref _IsLoaded, value);
         }
 
-        public ObservableCollection<Atendimento> atendimentosCollection;
+        [ObservableProperty]
+        private ObservableCollection<Atendimento> atendimentosCollection;
 
         public ICommand BackCommand { get; }
         public ICommand AdicionarServicoCommand { get; }
@@ -43,11 +46,17 @@ namespace Vet_App_For_Freelancers.ViewModels
         public PetPageViewModel(Pet pet, Tutor tutor)
         {
             _atendimentoDataAccess = new AtendimentoDataAccess(_connection);
+            _produtosAtendimentoDataAccess = new ProdutosAtendimentoDataAccess(_connection);
+            _servicosAtendimentoDataAccess = new ServicosAtendimentoDataAccess(_connection);
+            _proxVacinacaoAtendimentoDataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
+            _pagamentoDataAccess = new PagamentoDataAccess(_connection);
             Pet = pet;
             Tutor = tutor;
             BackCommand = new Command<object>(GoBack);
             AdicionarServicoCommand = new Command(AdicionarServico);
             atendimentosCollection = new ObservableCollection<Atendimento>();
+
+            WeakReferenceMessenger.Default.Register<PetMessage>(this, OnPetMessageReceived);
             _ = InitializeAsync();
         }
 
@@ -72,14 +81,17 @@ namespace Vet_App_For_Freelancers.ViewModels
         private async Task GetServices()
         {
             await Task.Delay(100);
+            AtendimentosCollection.Clear();
             try
             {
                 var atendimentos = _atendimentoDataAccess.SearchByIdPet(Pet.Id);
-                Debug.Write("total de Atendimentos Coletado no banco" + atendimentos.Count);
                 foreach (var atendimento in atendimentos)
                 {
-                    atendimentosCollection.Add(atendimento);
-                    await Application.Current.MainPage.DisplayAlert("Alerta", $"{atendimento}", "Ok");
+                    atendimento.itemAtendimento = _produtosAtendimentoDataAccess.getProdutosByIdAtendimento(atendimento.Id);
+                    atendimento.ItemServico = _servicosAtendimentoDataAccess.GetItemServicos(atendimento.Id);
+                    atendimento.Pagamento = _pagamentoDataAccess.GetById(atendimento.IdPagamento);
+
+                    AtendimentosCollection.Add(atendimento);
                 }
             }
             catch(Exception ex)
@@ -92,5 +104,22 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             await Application.Current.MainPage.Navigation.PopModalAsync();
         }
+
+        private void OnPetMessageReceived(object recipient, PetMessage message)
+        {
+            if (message.Value == Pet.Id)
+            {
+                _ = GetServices();
+            }
+        }
+
+        ~PetPageViewModel()
+        {
+            WeakReferenceMessenger.Default.Unregister<PetMessage>(this);
+        }
+    }
+    public class PetMessage : ValueChangedMessage<int>
+    {
+        public PetMessage(int tutorId) : base(tutorId) { }
     }
 }

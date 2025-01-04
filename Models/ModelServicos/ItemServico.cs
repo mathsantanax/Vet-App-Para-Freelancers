@@ -12,7 +12,7 @@ namespace Vet_App_For_Freelancers.Models.ModelServicos
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Nome { get; set; }
+        public string Nome { get; set; } = default!;
         public int Quantidade { get; set; }
         public decimal Preco { get; set; }
         public decimal Total { get; set; }

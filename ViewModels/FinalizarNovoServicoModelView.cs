@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -240,6 +241,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                         CadastrarProximaVacinacao();
                     }
                     await Application.Current.MainPage.DisplayAlert("Sucesso", "Venda Finalizada", "Ok");
+                    WeakReferenceMessenger.Default.Send(new PetMessage(PetView.Id));
                     await Application.Current.MainPage.Navigation.PopModalAsync();
                 }
                 else
@@ -268,7 +270,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             Atendimento.Data = DateTime.Now.Date;
             Atendimento.Desconto = Desconto;
             Atendimento.FezVacinacao = FezVacinacao;
-            Atendimento.ValorTotal = Amout;
+            Atendimento.ValorTotal = TotalAmout;
             Atendimento.IdPagamento = PagamentoSelecionado.Id;
             Atendimento.IdTutor = TutorView.Id;
             Atendimento.IdPet = PetView.Id;

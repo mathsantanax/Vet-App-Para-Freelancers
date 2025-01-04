@@ -36,9 +36,9 @@ namespace Vet_App_For_Freelancers.Models.ModelServicos
         public Pagamento Pagamento { get; set; } = default!;
 
         [Ignore]
-        public ItemAtendimento itemAtendimento { get; set; } = default!;
+        public List<ItemAtendimento> itemAtendimento { get; set; } = default!;
 
         [Ignore]
-        public ItemServico ItemServico { get; set; } = default!;
+        public List<ItemServico> ItemServico { get; set; } = default!;
     }
 }

@@ -62,11 +62,6 @@
                                 <Label Text="{Binding Pet.Peso} " FontSize="16" TextColor="Gray" Grid.Column="1" Grid.Row="2" />
                             </Grid>
 
-                            <Grid ColumnDefinitions="Auto,Auto" HorizontalOptions="Center" Padding="5" Grid.Column="0" Grid.Row="7">
-                                <Label Text="Ultima Vacinação: " FontSize="16" FontAttributes="Bold" TextColor="Gray" Grid.Column="0" Grid.Row="0"/>
-                                <Label Text="{Binding Pet.dataVacinacao, StringFormat='{0:dd/MM/yyyy}'}" FontSize="16" TextColor="Gray" Grid.Column="1" Grid.Row="5" />
-                            </Grid>
-
                         </Grid>
                         <Grid Grid.Column="1" RowDefinitions="Auto, Auto, Auto">
                             <Button Grid.Column="1"
@@ -100,24 +95,72 @@
                         </Grid>
                     </Grid>
                 </Frame>
-                <StackLayout Grid.Row="1" IsVisible="{Binding IsLoaded}">
+                
+                <StackLayout Grid.Row="1">
                     <Label Text="Serviços"
-                FontAttributes="Bold"
-                FontSize="22"
-                HorizontalOptions="CenterAndExpand"/>
+                            FontAttributes="Bold"
+                            FontSize="22"
+                            HorizontalOptions="CenterAndExpand"/>
 
-                    <CollectionView ItemsSource="{Binding atendimentosCollection}">
+                    <CollectionView ItemsSource="{Binding AtendimentosCollection}" HeightRequest="450">
                         <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="12" Orientation="Vertical"/>
+                            <LinearItemsLayout ItemSpacing="0" Orientation="Vertical"/>
                         </CollectionView.ItemsLayout>
+
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Frame  Padding="10" HasShadow="True" Margin="10,5" CornerRadius="10" BackgroundColor="White" BorderColor="LightGray">
-                                    <Label Text="{Binding ValorTotal}"/>
+                                <Frame HasShadow="True" 
+                                       Padding="2" 
+                                       Margin="10,0,10,10"
+                                       CornerRadius="10" 
+                                       Background="White" 
+                                       BorderColor="LightGray">
+                                    <Grid RowDefinitions="Auto, Auto, Auto, Auto">
+                                        <Label Grid.Row="0"
+                                               Text="{Binding Data, StringFormat='Data: {0:dd/MM/yyyy}'}"
+                                               TextColor="Black"
+                                               FontAttributes="Bold"
+                                               HorizontalTextAlignment="Start"
+                                               Margin="10,0,0,0.2"/>
+
+                                        <CollectionView Grid.Row="1" ItemsSource="{Binding ItemServico}">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Nome, StringFormat='Serviço: {0}'}"
+                                                                Margin="25,0,0,0"/>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+
+                                        <CollectionView Grid.Row="2" ItemsSource="{Binding itemAtendimento}">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Nome, StringFormat='Vacina: {0}'}"
+                                                               Margin="25,0,0,0"/>
+                                                    </StackLayout>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                        <Grid Grid.Row="3" ColumnDefinitions="Auto, Auto" 
+                                              HorizontalOptions="Start" 
+                                              ColumnSpacing="10"
+                                              Margin="25,0,0,0">
+                                        <Label Grid.Column="0"
+                                            Text="{Binding ValorTotal, StringFormat='R$ {0:F2}'}"
+                                               HorizontalTextAlignment="Center"/>
+                                            <Label Grid.Column="1"
+                                            Text="{Binding Pagamento.MetodoPagamento}"
+                                               HorizontalTextAlignment="Center"/>
+                                        </Grid>
+
+                                    </Grid>
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-
+                        
                     </CollectionView>
                 </StackLayout>
             </StackLayout>

@@ -179,6 +179,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             try
             {
+                await App.Current.MainPage.Navigation.PopModalAsync();
                 await Application.Current.MainPage.Navigation.PushModalAsync(new FinalizarNovoServicoPageView(tutorView, petView, amount, desconto, itemAtendimentos, itemServicos));
             }
             catch(Exception ex)
