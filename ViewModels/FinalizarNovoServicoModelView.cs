@@ -35,11 +35,16 @@ namespace Vet_App_For_Freelancers.ViewModels
         [ObservableProperty]
         public Pet petView;
 
+<<<<<<< HEAD
+        public ICommand BackCommand { get; }
+        public FinalizarNovoServicoModelView(Tutor tutorView, Pet petView,)
+=======
         [ObservableProperty]
         private decimal amout;
 
         private Pagamento pagamentoSelecionado;
         public Pagamento PagamentoSelecionado
+>>>>>>> 6f02289d4a9a2a74d8414de71af40c7b3a0c4898
         {
             get => pagamentoSelecionado;
             set
