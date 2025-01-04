@@ -42,6 +42,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         public PetPageViewModel(Pet pet, Tutor tutor)
         {
+            _atendimentoDataAccess = new AtendimentoDataAccess(_connection);
             Pet = pet;
             Tutor = tutor;
             BackCommand = new Command<object>(GoBack);
@@ -73,7 +74,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             await Task.Delay(100);
             try
             {
-                var atendimentos = _atendimentoDataAccess.GetAll();
+                var atendimentos = _atendimentoDataAccess.SearchByIdPet(Pet.Id);
                 Debug.Write("total de Atendimentos Coletado no banco" + atendimentos.Count);
                 foreach (var atendimento in atendimentos)
                 {

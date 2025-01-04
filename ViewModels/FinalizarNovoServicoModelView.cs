@@ -62,10 +62,10 @@ namespace Vet_App_For_Freelancers.ViewModels
             set
             {
                 SetProperty(ref _Desconto, value);
-               if(Desconto > 0)
-               {
-                  DescontoLoaded = true;
-               }
+                if (Desconto > 0)
+                {
+                    DescontoLoaded = true;
+                }
             }
         }
         private bool _IsLoadedData = false;
@@ -85,7 +85,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         public bool DescontoLoaded
         {
             get => _DescontoLoaded;
-            set => SetProperty(ref _DescontoLoaded,value);
+            set => SetProperty(ref _DescontoLoaded, value);
         }
 
         private bool _ItensLoaded = false;
@@ -105,19 +105,24 @@ namespace Vet_App_For_Freelancers.ViewModels
         public DateTime Date
         {
             get => _Date;
-            set 
+            set
             {
                 SetProperty(ref _Date, value);
-            } 
+            }
         }
 
         private bool FezVacinacao;
 
         public ICommand FinalizarCommand { get; }
         public ICommand BackCommand { get; }
-        public FinalizarNovoServicoModelView(Tutor tutor, Pet pet, decimal amout, decimal desconto, ObservableCollection<ItemAtendimento> atendimentosItem, ObservableCollection<ItemServico> servicosItem) 
+        public FinalizarNovoServicoModelView(Tutor tutor, Pet pet, decimal amout, decimal desconto, ObservableCollection<ItemAtendimento> atendimentosItem, ObservableCollection<ItemServico> servicosItem)
         {
             _pagamentoDataAccess = new PagamentoDataAccess(_connection);
+            _atendimentoDataAccess = new AtendimentoDataAccess(_connection);
+            _produtosAtendimentoDataAccess = new ProdutosAtendimentoDataAccess(_connection);
+            _servicosAtendimentoDataAccess = new ServicosAtendimentoDataAccess(_connection);
+            _proxVacinacaoAtendimentoDataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
+
             ApresentacaoItems = new ObservableCollection<ServicoPresentation>();
             Pagamentos = new ObservableCollection<Pagamento>();
             BackCommand = new Command<object>(GoBack);
@@ -178,9 +183,9 @@ namespace Vet_App_For_Freelancers.ViewModels
             await Task.Delay(100);
             try
             {
-                foreach(var servico in itemServicos)
+                foreach (var servico in itemServicos)
                 {
-                    if(string.Equals(servico.Nome, "VACINAÇÃO", StringComparison.OrdinalIgnoreCase))
+                    if (string.Equals(servico.Nome, "VACINAÇÃO", StringComparison.OrdinalIgnoreCase))
                     {
                         IsLoadedData = true;
                         FezVacinacao = true;
@@ -204,7 +209,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Erro ao carregar serviços: {ex.Message}");
             }
@@ -230,7 +235,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 {
                     CadastrarItensDeServico();
                     CadastrarItensDeProdutos();
-                    if(FezVacinacao == true)
+                    if (FezVacinacao == true)
                     {
                         CadastrarProximaVacinacao();
                     }
@@ -243,7 +248,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Alerta", $"{ex.Message}", "OK");
             }
@@ -272,7 +277,6 @@ namespace Vet_App_For_Freelancers.ViewModels
             {
                 // Inserir atendimento no banco de dados
                 _atendimentoDataAccess.Insert(Atendimento);
-                Application.Current.MainPage.DisplayAlert("Codigo de Atendimento", $"{Atendimento.Id}", "OK");
                 return true;
             }
             catch (Exception ex)
@@ -329,7 +333,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             try
             {
-                foreach(var servico in itemServicos)
+                foreach (var servico in itemServicos)
                 {
                     _servicosAtendimentoDataAccess.Insert(
                         new ItemServico
