@@ -14,18 +14,18 @@
     </ContentPage.Resources>
     <Grid Margin="8,12" RowDefinitions="Auto, *">
         <StackLayout
-        Grid.Row="0"
-        Margin="0"
-        HorizontalOptions="FillAndExpand"
-        IsVisible="{Binding IsLoaded}"
-        Orientation="Horizontal">
-            <Border
+            Grid.Row="0"
             Margin="0"
-            Padding="0"
-            Background="Transparent"
             HorizontalOptions="FillAndExpand"
-            StrokeShape="RoundRectangle 22"
-            StrokeThickness="0">
+            IsVisible="{Binding IsLoaded}"
+            Orientation="Horizontal">
+            <Border
+                Margin="0"
+                Padding="0"
+                Background="Transparent"
+                HorizontalOptions="FillAndExpand"
+                StrokeShape="RoundRectangle 22"
+                StrokeThickness="0">
                 <StackLayout
                     Margin="12,2"
                     Orientation="Horizontal"

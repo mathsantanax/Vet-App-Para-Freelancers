@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,26 @@ namespace Vet_App_For_Freelancers.DataAccess
         public AtendimentoDataAccess(SQLiteConnection connection) : base(connection)
         {
         }
+
+        public List<Atendimento> GetAtendimentosByDate(DateTime date)
+        {
+            try
+            {
+                var startOfMonth = new DateTime(date.Year, date.Month, 1);
+                var endOfMonth = startOfMonth.AddMonths(1);
+
+                // Busca no banco comparando os valores de início e fim
+                return _connection.Table<Atendimento>()
+                                  .Where(a => a.Data >= startOfMonth && a.Data < endOfMonth)
+                                  .ToList();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao buscar atendimentos pela data: {ex.Message}");
+                return new List<Atendimento>();
+            }
+        }
+
 
         public Atendimento GetLast()
         {

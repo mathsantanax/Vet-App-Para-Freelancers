@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Vet_App_For_Freelancers.Views.RelatorioPageView"
+             xmlns:converters="clr-namespace:Vet_App_For_Freelancers.Helpers"
+             Title="Relátorio">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBooleanConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, Auto ,*" Margin="8" IsVisible="{Binding IsLoaded}">
+        <StackLayout Grid.Row="0" Margin="0,10,0,0">
+            <Frame HasShadow="True" Background="White" BorderColor="LightGray" CornerRadius="10" Padding="10">
+                <Grid RowDefinitions="Auto, *" Padding="5">
+                    <Label Text="{Binding MesAnoAtual}"
+                           HorizontalOptions="Center"
+                           FontSize="16"
+                           FontAttributes="Bold"/>
+                    <Grid Grid.Row="1" RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="Auto, *, Auto" Margin="0,10,0,0">
+                        <Button Grid.Row="0"
+                                Grid.Column="0"
+                                BackgroundColor="Transparent"
+                                ImageSource="arrowleft.png"
+                                HeightRequest="50"
+                                Command="{Binding VoltarCommand}"/>
+
+                        <Grid Grid.Row="0" Grid.Column="1" RowDefinitions="Auto, Auto" HorizontalOptions="Center">
+                            <Label Grid.Row="0" 
+                                   Text="{Binding MesAtual, StringFormat='Total Mês: {0}'}"
+                                   FontSize="16"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Grid.Row="1" 
+                                   Text="{Binding TotalMes, StringFormat='R$ {0:N2}'}" 
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="25"/>
+                        </Grid>
+
+                        <Button Grid.Row="0" 
+                                Grid.Column="2"
+                                BackgroundColor="Transparent"
+                               ImageSource="arrowright.png"
+                                HeightRequest="50"
+                                Command="{Binding AvancarCommand}"/>
+
+                    </Grid>
+                </Grid>
+            </Frame>
+        </StackLayout>
+        
+        <StackLayout Grid.Row="1" HorizontalOptions="Center">
+            <Label Text="Serviços"
+                    FontAttributes="Bold"
+                    FontSize="22"
+                    HorizontalOptions="CenterAndExpand"/>
+        </StackLayout>
+
+        <ScrollView Grid.Row="2" IsVisible="{Binding ItensIsVisible}">
+            <Grid HorizontalOptions="Center">
+                <CollectionView ItemsSource="{Binding AtendimentoCollection}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="0" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto,Auto" RowSpacing="5" Padding="5">
+                                <Line Grid.Row="0" 
+                                    X1="400"
+                                      Y1="0"
+                                      X2="0"
+                                      Y2="0"
+                                      Stroke="Black"
+                                      StrokeDashArray="1,1"
+                                      StrokeDashOffset="6"/>
+                                <Label Grid.Row="1" 
+                                       Text="{Binding Data, StringFormat='Data Serviço: {0:dd/MM/yyyy}'}"
+                                       FontAttributes="Bold"
+                                       Margin="10,0,0,0"/>
+                                <Label Grid.Row="2" 
+                                       Text="{Binding Tutor.NomeTutor, StringFormat='Cliente: {0}'}"
+                                       Margin="25,0,0,0"/>
+                                <Label Grid.Row="3" 
+                                    Text="{Binding Pet.NomePet, StringFormat='Pet: {0}'}"
+                                       Margin="25,0,0,0"/>
+                                <Label Grid.Row="4"
+                                       Margin="25,0,0,0"
+                                       Text="{Binding ValorTotal, StringFormat='Valor: R$ {0:N2}'}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            <ActivityIndicator
+                HeightRequest="45"
+                HorizontalOptions="Center"
+                IsRunning="{Binding ItensIsVisible, Converter={StaticResource InverseBoolConverter}}"
+                VerticalOptions="Center"
+                WidthRequest="45"
+                Color="LightBlue" />
+            </Grid>
+        </ScrollView>
+        
+        <ActivityIndicator
+            HeightRequest="45"
+            HorizontalOptions="Center"
+            IsRunning="{Binding IsLoaded, Converter={StaticResource InverseBoolConverter}}"
+            VerticalOptions="Center"
+            WidthRequest="45"
+            Color="LightBlue" />    
+    </Grid>
+</ContentPage>

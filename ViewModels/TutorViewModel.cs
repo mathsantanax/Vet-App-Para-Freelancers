@@ -94,7 +94,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new PetPageView(selectedPet, Tutor));
+                await Application.Current.MainPage.Navigation.PushModalAsync(new PetPageView(selectedPet));
             }
             catch (Exception ex)
             {

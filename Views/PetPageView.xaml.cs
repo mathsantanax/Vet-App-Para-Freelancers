@@ -5,9 +5,9 @@ namespace Vet_App_For_Freelancers.Views;
 
 public partial class PetPageView : ContentPage
 {
-	public PetPageView(Pet pet, Tutor tutor)
+	public PetPageView(Pet pet)
 	{
 		InitializeComponent();
-		BindingContext = new PetPageViewModel(pet, tutor);
+		BindingContext = new PetPageViewModel(pet);
 	}
 }

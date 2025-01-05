@@ -27,6 +27,8 @@ namespace Vet_App_For_Freelancers.ViewModels
         private readonly ServicosAtendimentoDataAccess _servicosAtendimentoDataAccess;
         private readonly ProxVacinacaoAtendimentoDataAccess _proxVacinacaoAtendimentoDataAccess;
         private readonly PagamentoDataAccess _pagamentoDataAccess;
+        private readonly TutorDataAccess _tutorDataAccess;
+
         public Pet Pet { get; set; }
         public Tutor Tutor { get; set; }
 
@@ -43,15 +45,15 @@ namespace Vet_App_For_Freelancers.ViewModels
         public ICommand BackCommand { get; }
         public ICommand AdicionarServicoCommand { get; }
 
-        public PetPageViewModel(Pet pet, Tutor tutor)
+        public PetPageViewModel(Pet pet)
         {
             _atendimentoDataAccess = new AtendimentoDataAccess(_connection);
             _produtosAtendimentoDataAccess = new ProdutosAtendimentoDataAccess(_connection);
             _servicosAtendimentoDataAccess = new ServicosAtendimentoDataAccess(_connection);
             _proxVacinacaoAtendimentoDataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
             _pagamentoDataAccess = new PagamentoDataAccess(_connection);
+            _tutorDataAccess = new TutorDataAccess(_connection);
             Pet = pet;
-            Tutor = tutor;
             BackCommand = new Command<object>(GoBack);
             AdicionarServicoCommand = new Command(AdicionarServico);
             atendimentosCollection = new ObservableCollection<Atendimento>();
@@ -62,6 +64,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task InitializeAsync()
         {
+            await GetTutor();
             await GetServices();
             IsLoaded = true;
         }
@@ -93,6 +96,18 @@ namespace Vet_App_For_Freelancers.ViewModels
 
                     AtendimentosCollection.Add(atendimento);
                 }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task GetTutor()
+        {
+            try
+            {
+                Tutor = _tutorDataAccess.GetById(Pet.IdTutor);
             }
             catch(Exception ex)
             {

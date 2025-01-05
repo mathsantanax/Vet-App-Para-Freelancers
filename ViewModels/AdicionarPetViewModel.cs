@@ -92,14 +92,14 @@ namespace Vet_App_For_Freelancers.ViewModels
         private async Task GetRacas()
         {
             await Task.Delay(200);
-            racas.Clear();
+            Racas.Clear();
 
             try
             {
                 var raca = racaDataAccess.GetAll();
                 foreach (var item in raca)
                 {
-                    racas.Add(new Raca
+                    Racas.Add(new Raca
                     {
                         Id = item.Id,
                         TipoRaca = item.TipoRaca,
@@ -109,7 +109,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex.Message);
             }
             finally
             {
@@ -139,7 +139,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         private async Task GetEspecies()
         {
             await Task.Delay(200);
-            especies.Clear();
+            Especies.Clear();
 
             try
             {
@@ -154,7 +154,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
                 foreach (var item in especie)
                 {
-                    especies.Add(new Especie
+                    Especies.Add(new Especie
                     {
                         Id = item.Id,
                         NomeEspecie = item.NomeEspecie,
