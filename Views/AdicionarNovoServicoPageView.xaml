@@ -44,7 +44,7 @@
 
         <Grid  IsVisible="{Binding IsLoaded}" Margin="0,15,0,0" Grid.Row="1">
             <StackLayout Margin="5" Spacing="12" VerticalOptions="CenterAndExpand" >
-                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
                     <Grid Grid.Row="0" ColumnDefinitions="Auto, *">
                         <Picker Title="Selecione um Serviço"
                              ItemsSource="{Binding ObservableServico}"
@@ -212,6 +212,26 @@
                             </CollectionView>
                         </Frame>
                     </Grid>
+                    <Grid Grid.Row="5" IsVisible="{Binding MicroChipIsVisible}">
+                        <StackLayout>
+                            <Label Text="Microchipagem"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    TextColor="Orange"
+                                    Grid.Row="0"/>
+                            <Entry Placeholder="Insira o Numero do Microchip"
+                                   PlaceholderColor="Gray"
+                                   BackgroundColor="GhostWhite"
+                                   Margin="10"
+                                   IsPassword="False"
+                                   Keyboard="Numeric"
+                                   Text="{Binding NumeroMicrochip}"
+                                    />
+                        </StackLayout>
+                    </Grid>
+                    
                 </Grid>
 
             </StackLayout>

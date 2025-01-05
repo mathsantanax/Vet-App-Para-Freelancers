@@ -25,6 +25,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         private readonly ProdutosAtendimentoDataAccess _produtosAtendimentoDataAccess;
         private readonly ServicosAtendimentoDataAccess _servicosAtendimentoDataAccess;
         private readonly ProxVacinacaoAtendimentoDataAccess _proxVacinacaoAtendimentoDataAccess;
+        private readonly PetDataAccess _petDataAccess;
 
         private readonly PagamentoDataAccess _pagamentoDataAccess;
 
@@ -123,6 +124,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             _produtosAtendimentoDataAccess = new ProdutosAtendimentoDataAccess(_connection);
             _servicosAtendimentoDataAccess = new ServicosAtendimentoDataAccess(_connection);
             _proxVacinacaoAtendimentoDataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
+            _petDataAccess = new PetDataAccess(_connection);
 
             ApresentacaoItems = new ObservableCollection<ServicoPresentation>();
             Pagamentos = new ObservableCollection<Pagamento>();
@@ -236,6 +238,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 {
                     CadastrarItensDeServico();
                     CadastrarItensDeProdutos();
+                    AtualizarNumeroMicrochip();
                     if (FezVacinacao == true)
                     {
                         CadastrarProximaVacinacao();
@@ -253,6 +256,14 @@ namespace Vet_App_For_Freelancers.ViewModels
             catch (Exception ex)
             {
                 await Application.Current.MainPage.DisplayAlert("Alerta", $"{ex.Message}", "OK");
+            }
+        }
+
+        private void AtualizarNumeroMicrochip()
+        {
+            if(PetView.NumeroMicrochip != null && PetView.NumeroMicrochip != "")
+            {
+                _petDataAccess.Update(PetView);
             }
         }
 

@@ -24,6 +24,11 @@ namespace Vet_App_For_Freelancers.DataAccess
             {
                 Insert(new Servico { NomeService = "CONSULTA", Preco = 90.00m });
             }
+            // Inserir o serviço "microchipagem " apenas se ele não existir
+            if (!GetAll().Any(s => s.NomeService.Equals("MICROCHIPAGEM", StringComparison.OrdinalIgnoreCase)))
+            {
+                Insert(new Servico { NomeService = "MICROCHIPAGEM", Preco = 120.00m });
+            }
         }
     }
 }
