@@ -302,7 +302,8 @@ namespace Vet_App_For_Freelancers.ViewModels
         }
         private async Task InsertServiceOnItemServicoAsync()
         {
-            if(ServicoSelecionado != null)
+            await Task.Delay(100);
+            if (ServicoSelecionado != null)
             {
                 ItemServico itemServico = new ItemServico
                 {
@@ -338,7 +339,8 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task InsertProdutosOnItemAtendimento()
         {
-            if(ProdutoSelecionado != null)
+            await Task.Delay(100);
+            if (ProdutoSelecionado != null)
             {
                 ItemAtendimento itemAtendimento = new ItemAtendimento
                 {
@@ -369,9 +371,10 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task InserirNumeroMicrochip()
         {
+            await Task.Delay(100);
             if (NumeroMicrochip != null && NumeroMicrochip != "")
             {
-                petView.NumeroMicrochip = NumeroMicrochip;
+                PetView.NumeroMicrochip = NumeroMicrochip;
             }
         }
 

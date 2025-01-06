@@ -229,7 +229,8 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task ProdutosVisivel()
         {
-            if(IsVisibleProduto == false)
+            await Task.Delay(100);
+            if (IsVisibleProduto == false)
             {
                 IsVisibleProduto = true;
                 IsVisibleButtons = false;
@@ -238,6 +239,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task LaboratorioVisivel()
         {
+            await Task.Delay(100);
             if(IsVisibleLab == false)
             {
                 IsVisibleLab = true;

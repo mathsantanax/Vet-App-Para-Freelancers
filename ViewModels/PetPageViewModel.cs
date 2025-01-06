@@ -83,13 +83,13 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                throw ex;
+                Debug.WriteLine(ex.Message);
             }
         }
 
         private async Task GetServices()
         {
-            await Task.Delay(100);
+            await Task.Delay(200);
             AtendimentosCollection.Clear();
             try
             {
@@ -111,6 +111,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task GetTutor()
         {
+            await Task.Delay(100);
             try
             {
                 Tutor = _tutorDataAccess.GetById(Pet.IdTutor);
@@ -123,6 +124,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task GetPet(int pet)
         {
+            await Task.Delay(100);
             try
             {
                 Pet = _petDataAccess.GetById(pet);

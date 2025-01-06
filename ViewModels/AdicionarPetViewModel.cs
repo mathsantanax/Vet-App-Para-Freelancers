@@ -132,6 +132,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Conexão: {_connection.DatabasePath}");
+                Debug.WriteLine(ex.Message);
                 Debug.WriteLine($"Racas encontradas: {raca.Count()}");
             }
         }
@@ -164,7 +165,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex.Message);
             }
             finally
             {
@@ -187,6 +188,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Conexão: {_connection.DatabasePath}");
+                Debug.WriteLine(ex.Message);
                 Debug.WriteLine($"Racas encontradas: {especie.Count()}");
             }
         }

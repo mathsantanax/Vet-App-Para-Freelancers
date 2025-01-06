@@ -13,8 +13,6 @@ namespace Vet_App_For_Freelancers.ViewModels
 {
     public partial class ConfigModelView : ObservableObject
     {
-        private readonly NotificationService _notificationService;
-
         [ObservableProperty]
         private bool isToggle = false;
 

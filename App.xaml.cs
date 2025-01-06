@@ -10,7 +10,7 @@ namespace Vet_App_For_Freelancers
         public App()
         {
             InitializeComponent();
-            Current.UserAppTheme = AppTheme.Light;
+            UserAppTheme = AppTheme.Light;
             MainPage = new AppShell();
         }
     }
