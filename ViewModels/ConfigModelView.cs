@@ -1,17 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Vet_App_For_Freelancers.Notification;
 using Vet_App_For_Freelancers.Views;
 
 namespace Vet_App_For_Freelancers.ViewModels
 {
-    public class ConfigModelView : ObservableObject
+    public partial class ConfigModelView : ObservableObject
     {
+        private readonly NotificationService _notificationService;
 
+        [ObservableProperty]
+        private bool isToggle = false;
 
         public ICommand ServicosCommand { get; }
         public ICommand ProdutosCommand { get; }
@@ -21,9 +26,37 @@ namespace Vet_App_For_Freelancers.ViewModels
             FecharAppCommand = new Command(FecharApp);
             ServicosCommand = new Command(ServicosPage);
             ProdutosCommand = new Command(ProdutosPage);
+
+            InicializarNotificacoes();
         }
 
-        public async void ServicosPage()
+        private async void InicializarNotificacoes()
+        {
+            try
+            {
+                IsToggle = true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("o erro está aqui olha para cá >>>>>>>>>>>>>>>>>" + ex.Message);
+                IsToggle = false;
+            }
+        }
+
+
+        //partial void OnIsToggleChanged(bool value)
+        //{
+        //    if (value)
+        //    {
+        //        _notificationService.EnableNotifications();
+        //    }
+        //    else
+        //    {
+        //        _notificationService.DisableNotifications();
+        //    }
+        //}
+
+        private async void ServicosPage()
         {
             try
             {
@@ -35,7 +68,8 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
-        public async void ProdutosPage()
+
+        private async void ProdutosPage()
         {
             try
             {
@@ -47,7 +81,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
-        public async void FecharApp()
+        private async void FecharApp()
         {
             await Task.Delay(200);
             Environment.Exit(0);

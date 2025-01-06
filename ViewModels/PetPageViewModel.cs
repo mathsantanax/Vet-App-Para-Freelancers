@@ -28,6 +28,9 @@ namespace Vet_App_For_Freelancers.ViewModels
         private readonly ProxVacinacaoAtendimentoDataAccess _proxVacinacaoAtendimentoDataAccess;
         private readonly PagamentoDataAccess _pagamentoDataAccess;
         private readonly TutorDataAccess _tutorDataAccess;
+        private readonly PetDataAccess _petDataAccess;
+        private readonly RacaDataAccess _racaDataAccess;
+        private readonly EspecieDataAccess _especieDataAccess;
 
         public Pet Pet { get; set; }
         public Tutor Tutor { get; set; }
@@ -45,7 +48,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         public ICommand BackCommand { get; }
         public ICommand AdicionarServicoCommand { get; }
 
-        public PetPageViewModel(Pet pet)
+        public PetPageViewModel(int pet)
         {
             _atendimentoDataAccess = new AtendimentoDataAccess(_connection);
             _produtosAtendimentoDataAccess = new ProdutosAtendimentoDataAccess(_connection);
@@ -53,17 +56,20 @@ namespace Vet_App_For_Freelancers.ViewModels
             _proxVacinacaoAtendimentoDataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
             _pagamentoDataAccess = new PagamentoDataAccess(_connection);
             _tutorDataAccess = new TutorDataAccess(_connection);
-            Pet = pet;
+            _petDataAccess = new PetDataAccess(_connection);
+            _racaDataAccess = new RacaDataAccess(_connection);
+            _especieDataAccess = new EspecieDataAccess(_connection);
             BackCommand = new Command<object>(GoBack);
             AdicionarServicoCommand = new Command(AdicionarServico);
             atendimentosCollection = new ObservableCollection<Atendimento>();
 
             WeakReferenceMessenger.Default.Register<PetMessage>(this, OnPetMessageReceived);
-            _ = InitializeAsync();
+            _ = InitializeAsync(pet);
         }
 
-        private async Task InitializeAsync()
+        private async Task InitializeAsync(int id)
         {
+            await GetPet(id);
             await GetTutor();
             await GetServices();
             IsLoaded = true;
@@ -108,6 +114,23 @@ namespace Vet_App_For_Freelancers.ViewModels
             try
             {
                 Tutor = _tutorDataAccess.GetById(Pet.IdTutor);
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private async Task GetPet(int pet)
+        {
+            try
+            {
+                Pet = _petDataAccess.GetById(pet);
+                if(Pet != null)
+                {
+                    Pet.Raca = _racaDataAccess.GetById(Pet.IdRaca);
+                    Pet.Especie = _especieDataAccess.GetById(Pet.IdEspecie);
+                }
             }
             catch(Exception ex)
             {

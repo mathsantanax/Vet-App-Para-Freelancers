@@ -83,6 +83,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             try
             {
                 AtendimentoCollection.Clear();
+                var atendimentos = new ObservableCollection<Atendimento>();
                 TotalMes = 0;
                 var atendimentoMes = _atendimentoDataAccess.GetAtendimentosByDate(dataAtual);
                 foreach (var a in atendimentoMes)
@@ -90,7 +91,12 @@ namespace Vet_App_For_Freelancers.ViewModels
                     TotalMes += a.ValorTotal;
                     a.Pet = _petDataAccess.GetById(a.IdPet);
                     a.Tutor = _tutorDataAccess.GetById(a.IdTutor);
-                    AtendimentoCollection.Add(a);
+                    atendimentos.Add(a);
+                }
+                var sortedAtendimentos = atendimentos.OrderByDescending(a => a.Data).ToList();
+                foreach (var atendimento in sortedAtendimentos)
+                {
+                    AtendimentoCollection.Add(atendimento);
                 }
             }
             catch (Exception ex)

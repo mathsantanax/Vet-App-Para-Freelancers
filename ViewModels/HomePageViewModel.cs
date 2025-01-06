@@ -12,6 +12,8 @@ using Vet_App_For_Freelancers.DataAccess;
 using Vet_App_For_Freelancers.Views;
 using SQLite;
 using Vet_App_For_Freelancers.Data;
+using Vet_App_For_Freelancers.Notification;
+using Plugin.LocalNotification;
 
 namespace Vet_App_For_Freelancers.ViewModels
 {

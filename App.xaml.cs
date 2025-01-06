@@ -1,4 +1,9 @@
-﻿namespace Vet_App_For_Freelancers
+﻿using Plugin.LocalNotification;
+using Plugin.LocalNotification.EventArgs;
+using Vet_App_For_Freelancers.Notification;
+using Vet_App_For_Freelancers.Views;
+
+namespace Vet_App_For_Freelancers
 {
     public partial class App : Application
     {

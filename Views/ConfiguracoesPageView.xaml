@@ -41,9 +41,9 @@
                            VerticalOptions="Center"
                            FontSize="16"
                            TextColor="Black" />
-                    <Switch IsToggled="False" 
+                    <Switch IsToggled="{Binding IsToggle}" 
                             OnColor="LightBlue"
-                            ThumbColor="Blue"/>
+                            />
                 </StackLayout>
 
                 <!-- Botão de Logout -->
