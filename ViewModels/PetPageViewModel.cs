@@ -111,10 +111,10 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task GetTutor()
         {
-            await Task.Delay(100);
             try
             {
                 Tutor = _tutorDataAccess.GetById(Pet.IdTutor);
+                await Task.Delay(100);
             }
             catch(Exception ex)
             {
@@ -124,7 +124,6 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         private async Task GetPet(int pet)
         {
-            await Task.Delay(100);
             try
             {
                 Pet = _petDataAccess.GetById(pet);
@@ -133,6 +132,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                     Pet.Raca = _racaDataAccess.GetById(Pet.IdRaca);
                     Pet.Especie = _especieDataAccess.GetById(Pet.IdEspecie);
                 }
+                await Task.Delay(100);
             }
             catch(Exception ex)
             {

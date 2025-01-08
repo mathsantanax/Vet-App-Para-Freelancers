@@ -306,12 +306,15 @@ namespace Vet_App_For_Freelancers.ViewModels
         {
             try
             {
-                _proxVacinacaoAtendimentoDataAccess.Insert(new Vacinacao
+                if(Date != DateTime.Now)
                 {
-                    DataProxima = Date,
-                    IdPet = PetView.Id,
-                    IdAtendimento = Atendimento.Id,
-                });
+                    _proxVacinacaoAtendimentoDataAccess.Insert(new Vacinacao
+                    {
+                        DataProxima = Date,
+                        IdPet = PetView.Id,
+                        IdAtendimento = Atendimento.Id,
+                    }); 
+                }
             }
             catch (Exception ex)
             {

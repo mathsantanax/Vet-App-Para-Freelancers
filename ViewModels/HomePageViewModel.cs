@@ -57,7 +57,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         SQLiteConnection connection = DatabaseConfig.GetConnection();
         private readonly TutorDataAccess tutorDataAccess;
         public ObservableCollection<Tutor> Tutores { get; private set; }
-        public ICommand RefreshCommand => new Command(async () => await RefreshItemsAsync());
+        public ICommand RefreshCommand => new Command(async () => await GetRegisterAsync());
         public ICommand TutoresTapCommand { get; }
         public ICommand AddNewTutor { get; }
         public ICommand CofigCommand { get; }
@@ -96,19 +96,21 @@ namespace Vet_App_For_Freelancers.ViewModels
             {
                 await Application.Current.MainPage.Navigation.PushAsync(new ConfiguracoesPageView());
             }
-            catch
+            catch( Exception ex)
             {
-                throw;
+                Debug.WriteLine(ex);
             }
         }
 
         private async Task GetRegisterAsync()
         {
+                IsRefreshing = true;
             try
             {
-                Tutores.Clear();
+                await Task.Delay(TimeSpan.FromSeconds(RefreshDuration));
                 await Task.Delay(500);
                 var getTutor = tutorDataAccess.GetAllTutors();
+                Tutores.Clear();
                 if (getTutor != null && getTutor.Any())
                 {
                     foreach (var tutor in getTutor)
@@ -116,9 +118,8 @@ namespace Vet_App_For_Freelancers.ViewModels
                         Tutores.Add(tutor);
                     }
                 }
+                FilterTutores();
 
-                // Atualiza a lista filtrada
-                FilteredTutores = new ObservableCollection<Tutor>(Tutores);
             }
             catch (Exception ex)
             {
@@ -127,6 +128,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             finally
             {
                 IsLoaded = true;
+                IsRefreshing = false;
             }
         }
 
@@ -147,25 +149,6 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
-        private async Task RefreshItemsAsync()
-        {
-            IsRefreshing = true;
-            try
-            {
-                await Task.Delay(TimeSpan.FromSeconds(RefreshDuration));
-                FilteredTutores.Clear();
-                Tutores.Clear();
-                await GetRegisterAsync();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Erro ao atualizar itens: {ex.Message}");
-            }
-            finally
-            {
-                IsRefreshing = false;
-            }
-        }
 
         private async void AddTutor()
         {
@@ -185,7 +168,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                             Celular = decimal.Parse($"{ddd}{celular}")
                         });
                         await Application.Current.MainPage.DisplayAlert("Sucesso", "Realizado com Sucesso", "OK");
-                        await RefreshItemsAsync();
+                        await GetRegisterAsync();
                     }
                     else
                     {
