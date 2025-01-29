@@ -1,0 +1,21 @@
+[
+  {
+    "ContainingType": "api_vet_app.Endpoints.WeatherForecast\u002B\u003C\u003Ec__DisplayClass0_0",
+    "Method": "\u003CWeather\u003Eb__0",
+    "RelativePath": "weatherforecast",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "api_vet_app.Endpoints.WeatherForecast\u002BWeatherForecasta[]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

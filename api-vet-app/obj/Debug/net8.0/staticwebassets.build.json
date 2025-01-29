@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "0+TpBFYt+IJWRAVyVWKoSH4tUkSa20F1cxBd3lpzm3Q=",
+  "Source": "api-vet-app",
+  "BasePath": "_content/api-vet-app",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
