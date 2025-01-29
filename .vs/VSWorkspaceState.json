@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Application\\.github\\workflows"
+    "\\api-vet-app",
+    "\\api-vet-app\\Data",
+    "\\api-vet-app\\Extensions",
+    "\\api-vet-app\\Models",
+    "\\api-vet-app\\Models\\Service"
   ],
+  "SelectedNode": "\\api-vet-app\\Data\\AppDbContext.cs",
   "PreviewInSolutionExplorer": false
 }
