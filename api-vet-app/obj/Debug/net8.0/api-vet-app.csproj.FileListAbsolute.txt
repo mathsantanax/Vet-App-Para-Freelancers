@@ -289,3 +289,4 @@ C:\Users\mathe\source\repos\Vet-App-For-Freelancers\api-vet-app\obj\Debug\net8.0
 C:\Users\mathe\source\repos\Vet-App-For-Freelancers\api-vet-app\obj\Debug\net8.0\api-vet-app.pdb
 C:\Users\mathe\source\repos\Vet-App-For-Freelancers\api-vet-app\obj\Debug\net8.0\api-vet-app.genruntimeconfig.cache
 C:\Users\mathe\source\repos\Vet-App-For-Freelancers\api-vet-app\obj\Debug\net8.0\ref\api-vet-app.dll
+C:\Users\mathe\source\repos\Vet-App-For-Freelancers\api-vet-app\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

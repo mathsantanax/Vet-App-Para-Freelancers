@@ -5,7 +5,12 @@
         public static WebApplication MapEndpoints(this WebApplication app)
         {
 
-            app.Weather();
+            app.Weather()
+            .User()
+            .Client()
+            .Especie()
+            .Raca();
+
             return app;
         }
     }
