@@ -138,6 +138,81 @@
     ]
   },
   {
+    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CPet\u003Eb__0_1",
+    "RelativePath": "pet",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.ModelView.ClientPetRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Pet"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CPet\u003Eb__0_2",
+    "RelativePath": "pet",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.ModelView.ClientPetRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Pet"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CPet\u003Eb__0_0",
+    "RelativePath": "pet/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Pet"
+    ]
+  },
+  {
     "ContainingType": "api_vet_app.Endpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CRaca\u003Eb__0_2",
     "RelativePath": "raca",
@@ -157,6 +232,9 @@
         "MediaTypes": [],
         "StatusCode": 200
       }
+    ],
+    "Tags": [
+      "Racas"
     ]
   },
   {

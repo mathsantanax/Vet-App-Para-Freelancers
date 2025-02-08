@@ -9,7 +9,8 @@
             .User()
             .Client()
             .Especie()
-            .Raca();
+            .Raca()
+            .Pet();
 
             return app;
         }
