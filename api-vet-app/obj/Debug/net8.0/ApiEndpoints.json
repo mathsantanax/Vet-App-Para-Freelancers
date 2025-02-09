@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "api_vet_app.Endpoints.MapClientEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapClientEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CClient\u003Eb__0_0",
     "RelativePath": "client",
     "HttpMethod": "POST",
@@ -25,7 +25,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapClientEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapClientEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CClient\u003Eb__0_2",
     "RelativePath": "client/{id}",
     "HttpMethod": "DELETE",
@@ -50,7 +50,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapClientEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapClientEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CClient\u003Eb__0_1",
     "RelativePath": "clients",
     "HttpMethod": "GET",
@@ -69,7 +69,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CEspecie\u003Eb__0_2",
     "RelativePath": "especie",
     "HttpMethod": "POST",
@@ -94,7 +94,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CEspecie\u003Eb__0_1",
     "RelativePath": "especie/{id}",
     "HttpMethod": "GET",
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapEspecieEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CEspecie\u003Eb__0_0",
     "RelativePath": "especies",
     "HttpMethod": "GET",
@@ -138,7 +138,51 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapPaymentEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CPayment\u003Eb__0_0",
+    "RelativePath": "payment",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapPaymentEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CPayment\u003Eb__0_1",
+    "RelativePath": "payment/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapPetEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CPet\u003Eb__0_1",
     "RelativePath": "pet",
     "HttpMethod": "POST",
@@ -163,7 +207,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapPetEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CPet\u003Eb__0_2",
     "RelativePath": "pet",
     "HttpMethod": "DELETE",
@@ -188,7 +232,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapPetEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapPetEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CPet\u003Eb__0_0",
     "RelativePath": "pet/{id}",
     "HttpMethod": "GET",
@@ -213,7 +257,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CRaca\u003Eb__0_2",
     "RelativePath": "raca",
     "HttpMethod": "POST",
@@ -238,7 +282,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CRaca\u003Eb__0_1",
     "RelativePath": "raca/{id}",
     "HttpMethod": "GET",
@@ -263,7 +307,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CRaca\u003Eb__0_0",
     "RelativePath": "racas",
     "HttpMethod": "GET",
@@ -282,7 +326,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapUserEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapUserEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CUser\u003Eb__1_1",
     "RelativePath": "user/login",
     "HttpMethod": "POST",
@@ -307,7 +351,7 @@
     ]
   },
   {
-    "ContainingType": "api_vet_app.Endpoints.MapUserEndpoints\u002B\u003C\u003Ec",
+    "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapUserEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CUser\u003Eb__1_0",
     "RelativePath": "user/register",
     "HttpMethod": "POST",

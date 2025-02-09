@@ -1,4 +1,8 @@
-﻿namespace api_vet_app.Endpoints
+﻿using api_vet_app.Endpoints.PersonaEndpoints;
+using api_vet_app.Endpoints.PetEndpoints;
+using api_vet_app.Endpoints.ServiceEndpoints;
+
+namespace api_vet_app.Endpoints
 {
     public static class EndpointsExtensions
     {
@@ -8,9 +12,11 @@
             app.Weather()
             .User()
             .Client()
+            .Pet()
             .Especie()
             .Raca()
-            .Pet();
+            .Payment();
+            
 
             return app;
         }

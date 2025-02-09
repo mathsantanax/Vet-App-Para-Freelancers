@@ -7,37 +7,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace api_vet_app.Endpoints
+namespace api_vet_app.Endpoints.PersonaEndpoints
 {
     public static class MapClientEndpoints
     {
         public static WebApplication Client(this WebApplication app)
         {
             // Criar um Novo Cliente vinculado ao vet autenticado
-            app.MapPost("/client", [Authorize] async ([FromBody] Client request, 
-                AppDbContext dbContext, 
-                ClaimsPrincipal user ) => {
-                    // Obtém o Id do vet
-                    var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                    if (vetId == null)
-                        return Results.Unauthorized();
+            app.MapPost("/client", [Authorize] async ([FromBody] Client request,
+                AppDbContext dbContext,
+                ClaimsPrincipal user) =>
+            {
+                // Obtém o Id do vet
+                var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (vetId == null)
+                    return Results.Unauthorized();
 
-                    var client = new Client
-                    {
-                        Name = request.Name.ToUpper(),
-                        Celular = request.Celular,
-                        VetId = vetId,
-                    };
+                var client = new Client
+                {
+                    Name = request.Name.ToUpper(),
+                    Celular = request.Celular,
+                    VetId = vetId,
+                };
 
-                    dbContext.Clients.Add(client);
-                    await dbContext.SaveChangesAsync();
+                dbContext.Clients.Add(client);
+                await dbContext.SaveChangesAsync();
 
-                    return Results.Created($"/client/{client.Id}", client);
-                }).RequireAuthorization()
+                return Results.Created($"/client/{client.Id}", client);
+            }).RequireAuthorization()
                 .WithTags("Client");
 
             // Listar todos os cliente com o vet autenticado
-            app.MapGet("/clients", [Authorize] async (AppDbContext dbContext, ClaimsPrincipal user) => {
+            app.MapGet("/clients", [Authorize] async (AppDbContext dbContext, ClaimsPrincipal user) =>
+            {
 
                 // obtem id do vet
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -54,9 +56,9 @@ namespace api_vet_app.Endpoints
 
 
             // Deletar cliente com id com vet autenticado
-            app.MapDelete("/client/{id}", [Authorize] async ([FromRoute] int id, 
+            app.MapDelete("/client/{id}", [Authorize] async ([FromRoute] int id,
                 AppDbContext dbContext,
-                ClaimsPrincipal user) => 
+                ClaimsPrincipal user) =>
             {
                 // obtem o id do vet
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;

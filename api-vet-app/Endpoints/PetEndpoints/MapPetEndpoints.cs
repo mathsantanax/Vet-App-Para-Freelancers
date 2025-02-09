@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
-namespace api_vet_app.Endpoints
+namespace api_vet_app.Endpoints.PetEndpoints
 {
     public static class MapPetEndpoints
     {
@@ -37,7 +37,7 @@ namespace api_vet_app.Endpoints
             }).RequireAuthorization()
             .WithTags("Pet");
 
-            app.MapPost("/pet", [Authorize] async([FromBody] ClientPetRequest request, AppDbContext dbContext, ClaimsPrincipal user) =>
+            app.MapPost("/pet", [Authorize] async ([FromBody] ClientPetRequest request, AppDbContext dbContext, ClaimsPrincipal user) =>
             {
                 // Obtém o Id do vet
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace api_vet_app.Endpoints
+namespace api_vet_app.Endpoints.PersonaEndpoints
 {
     public static class MapUserEndpoints
     {
@@ -35,7 +35,7 @@ namespace api_vet_app.Endpoints
         public static WebApplication User(this WebApplication app)
         {
             // Endpoint para registrar veterinario
-            app.MapPost("/user/register", async([FromBody] RegisterRequest request, UserManager<User> userManager) =>
+            app.MapPost("/user/register", async ([FromBody] RegisterRequest request, UserManager<User> userManager) =>
             {
                 if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
                     return Results.BadRequest("Email e senha são obrigatórios");
@@ -56,13 +56,13 @@ namespace api_vet_app.Endpoints
                 if (!result.Succeeded)
                     return Results.BadRequest(result.Errors);
 
-                return Results.Created($"/user/{user.Id}", new {user.Id, user.FullName, user.Email});
+                return Results.Created($"/user/{user.Id}", new { user.Id, user.FullName, user.Email });
             }).WithTags("User")
             .AllowAnonymous();
 
 
             // Endpoint para login e geração do jwt
-            app.MapPost("/user/login", async([FromBody] LoginRequest request, UserManager<User> userManager, IConfiguration config) =>
+            app.MapPost("/user/login", async ([FromBody] LoginRequest request, UserManager<User> userManager, IConfiguration config) =>
             {
                 if (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
                     return Results.BadRequest("Email e senha são obrigatórios.");

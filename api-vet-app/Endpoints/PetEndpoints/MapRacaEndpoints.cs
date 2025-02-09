@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
 using System.Security.Claims;
 
-namespace api_vet_app.Endpoints
+namespace api_vet_app.Endpoints.PetEndpoints
 {
     public static class MapRacaEndpoints
     {
-        public static WebApplication Raca(this  WebApplication app)
+        public static WebApplication Raca(this WebApplication app)
         {
             app.MapGet("/racas", [Authorize] async (AppDbContext dbContext, ClaimsPrincipal user) =>
             {
@@ -35,7 +35,7 @@ namespace api_vet_app.Endpoints
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (vetId == null)
                     return Results.Unauthorized();
-                
+
                 // pega a raca no BD
                 var raca = await dbContext.Racas.Where(r => r.Id.Equals(id)).ToListAsync();
 

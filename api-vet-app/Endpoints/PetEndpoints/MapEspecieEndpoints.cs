@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace api_vet_app.Endpoints
+namespace api_vet_app.Endpoints.PetEndpoints
 {
     public static class MapEspecieEndpoints
     {
         public static WebApplication Especie(this WebApplication app)
         {
-            app.MapGet("/especies", [Authorize] async (AppDbContext dbContext, ClaimsPrincipal user ) =>
+            app.MapGet("/especies", [Authorize] async (AppDbContext dbContext, ClaimsPrincipal user) =>
             {
                 // verifica usuario logado
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -22,14 +22,14 @@ namespace api_vet_app.Endpoints
                 var especies = await dbContext.Especies.ToListAsync();
 
                 // verifica se tem alguma cadastrada
-                if(especies == null)
+                if (especies == null)
                     return Results.Empty;
 
                 return Results.Ok(especies);
             }).RequireAuthorization()
             .WithTags("Especies");
 
-            app.MapGet("/especie/{id}", [Authorize] async(int id, AppDbContext dbContext, ClaimsPrincipal user) =>
+            app.MapGet("/especie/{id}", [Authorize] async (int id, AppDbContext dbContext, ClaimsPrincipal user) =>
             {
                 // verifica usuario logado
                 var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
