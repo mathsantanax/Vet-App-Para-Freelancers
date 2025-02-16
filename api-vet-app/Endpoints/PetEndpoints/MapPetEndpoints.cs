@@ -5,6 +5,7 @@ using api_vet_app.ModelView;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
@@ -15,27 +16,28 @@ namespace api_vet_app.Endpoints.PetEndpoints
         public static WebApplication Pet(this WebApplication app)
         {
 
-            app.MapGet("/pet/{id}", [Authorize] async (int id, AppDbContext dbContext, ClaimsPrincipal user) =>
+            app.MapGet("/pet/{id}", [Authorize] async (string id, AppDbContext dbContext, ClaimsPrincipal user) =>
             {
                 // Obtém o Id do vet
-                var vetId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                if (vetId == null)
+                var vetIdStr = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (string.IsNullOrEmpty(vetIdStr))
                     return Results.Unauthorized();
 
-                // busca cliente por id e por id do vet
-                var cliente = await dbContext.Clients.Where(c => c.Id.Equals(id) && c.VetId.Equals(vetId)).FirstOrDefaultAsync();
-                if (cliente == null)
-                    return Results.BadRequest("Não Econtrado");
+                // Converte id do cliente para int, se necessário
+                if (!int.TryParse(id, out int clientId))
+                    return Results.BadRequest("Formato inválido para Id do Cliente.");
 
-                // busca pet pelo id do cliente e id do vet
-                var pet = await dbContext.ClientsPet.Where(p => p.IdClient.Equals(cliente.Id) && p.VetId.Equals(vetId)).ToListAsync();
+                // Busca pets pelo id do cliente e id do vet
+                var pets = await dbContext.ClientsPet
+                                          .Where(p => p.IdClient == clientId)
+                                          .ToListAsync();
 
-                if (pet == null)
-                    return Results.BadRequest("Não Encontrado.");
+                if (!pets.Any())
+                    return Results.NotFound("Nenhum pet encontrado.");
 
-                return Results.Ok($"/pet/{pet.Count()}");
+                return Results.Ok(pets);
             }).RequireAuthorization()
-            .WithTags("Pet");
+              .WithTags("Pet");
 
             app.MapPost("/pet", [Authorize] async ([FromBody] ClientPetRequest request, AppDbContext dbContext, ClaimsPrincipal user) =>
             {
@@ -97,7 +99,7 @@ namespace api_vet_app.Endpoints.PetEndpoints
                     IdRaca = request.IdRaca,
                     IdEspecie = request.IdEspecie,
                     IdClient = request.IdClient,
-                    VetId = vetId,
+                    VetId = vetId
                 };
 
                 // excluindo pet

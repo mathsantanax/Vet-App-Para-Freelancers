@@ -27,16 +27,19 @@ namespace api_vet_app.Models.Service
         // Foreign Key's
         [ForeignKey(nameof(IdClient))]
         [Required]
-        public int IdClient { get; set; }
+        public string? IdClient { get; set; }
         public Client? Client { get; set; }
+
         [ForeignKey(nameof(IdClientPet))]
         [Required]
-        public int IdClientPet { get; set; }
+        public string? IdClientPet { get; set; }
         public ClientPet? ClientPet { get; set; }
+
         [ForeignKey(nameof(IdPayment))]
         [Required]
-        public int IdPayment { get; set; }
+        public string? IdPayment { get; set; }
         public Payment? Payment { get; set; }
+
         [ForeignKey(nameof(VetId))]
         [Required]
         public string? VetId { get; set; }

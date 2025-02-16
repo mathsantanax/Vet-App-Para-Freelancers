@@ -8,8 +8,8 @@
         public int Idade { get; set; }
         public float Peso { get; set; }
         public string? Sexo { get; set; }
-        public int IdRaca { get; set; }
-        public int IdEspecie { get; set; }
+        public string? IdRaca { get; set; }
+        public string? IdEspecie { get; set; }
         public int IdClient { get; set; }
         public string? VetId { get; set; }
     }

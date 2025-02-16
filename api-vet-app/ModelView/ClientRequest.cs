@@ -5,15 +5,10 @@ using System.Text.Json.Serialization;
 
 namespace api_vet_app.Models.ModelView
 {
-    public class ClientRequest
+    public record ClientRequest
     {
-        public int Id { get; set; }
         public string? Name { get; set; }
         public decimal Celular { get; set; }
 
-        // relacionamento com o veterinario (user)
-        public int VetId { get; set; }
-        [JsonIgnore]
-        public User? User { get; set; }
     }
 }

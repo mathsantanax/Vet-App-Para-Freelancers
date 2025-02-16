@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("api-vet-app")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07de4275bdea5fdbb8728d599964ddb24c3aa2f6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b73e485676ededf6e994fbd33ce5a52ee69a7626")]
 [assembly: System.Reflection.AssemblyProductAttribute("api-vet-app")]
 [assembly: System.Reflection.AssemblyTitleAttribute("api-vet-app")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

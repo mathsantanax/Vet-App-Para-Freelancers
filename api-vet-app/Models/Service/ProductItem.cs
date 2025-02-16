@@ -21,11 +21,13 @@ namespace api_vet_app.Models.Service
 
         // Foreign Key's
         [ForeignKey(nameof(IdProduct)), Required]
-        public int IdProduct { get; set; }
+        public string? IdProduct { get; set; }
         public Product? Product { get; set; }
+
         [ForeignKey(nameof(IdAttending)), Required]
-        public int IdAttending { get; set; }
+        public string? IdAttending { get; set; }
         public Attending? Attending { get; set; }
+
         [ForeignKey(nameof(VetId)), Required]
         public string? VetId { get; set; }
         public User? User { get; set; }

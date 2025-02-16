@@ -12,7 +12,7 @@ using api_vet_app.Data;
 namespace api_vet_app.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250205021054_v2")]
+    [Migration("20250215032840_v2")]
     partial class v2
     {
         /// <inheritdoc />
@@ -264,14 +264,17 @@ namespace api_vet_app.Migrations
                     b.Property<int?>("EspecieId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdClient")
-                        .HasColumnType("int");
+                    b.Property<string>("IdClient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdEspecie")
-                        .HasColumnType("int");
+                    b.Property<string>("IdEspecie")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdRaca")
-                        .HasColumnType("int");
+                    b.Property<string>("IdRaca")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Idade")
                         .HasColumnType("int");
@@ -375,14 +378,17 @@ namespace api_vet_app.Migrations
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("IdClient")
-                        .HasColumnType("int");
+                    b.Property<string>("IdClient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdClientPet")
-                        .HasColumnType("int");
+                    b.Property<string>("IdClientPet")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdPayment")
-                        .HasColumnType("int");
+                    b.Property<string>("IdPayment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsVaccina")
                         .HasColumnType("bit");
@@ -494,8 +500,9 @@ namespace api_vet_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IdLab")
-                        .HasColumnType("int");
+                    b.Property<string>("IdLab")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("LabId")
                         .HasColumnType("int");
@@ -539,11 +546,13 @@ namespace api_vet_app.Migrations
                     b.Property<int?>("AttendingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdAttending")
-                        .HasColumnType("int");
+                    b.Property<string>("IdAttending")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdProduct")
-                        .HasColumnType("int");
+                    b.Property<string>("IdProduct")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -592,11 +601,13 @@ namespace api_vet_app.Migrations
                     b.Property<int?>("AttendingId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdAttending")
-                        .HasColumnType("int");
+                    b.Property<string>("IdAttending")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdJob")
-                        .HasColumnType("int");
+                    b.Property<string>("IdJob")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("JobId")
                         .HasColumnType("int");
@@ -648,14 +659,17 @@ namespace api_vet_app.Migrations
                     b.Property<int?>("ClientPetId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdAttending")
-                        .HasColumnType("int");
+                    b.Property<string>("IdAttending")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdClient")
-                        .HasColumnType("int");
+                    b.Property<string>("IdClient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdClientPet")
-                        .HasColumnType("int");
+                    b.Property<string>("IdClientPet")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("NextVaccination")
                         .IsRequired()
@@ -735,7 +749,7 @@ namespace api_vet_app.Migrations
             modelBuilder.Entity("api_vet_app.Models.Pet.ClientPet", b =>
                 {
                     b.HasOne("api_vet_app.Models.Persona.Client", "Client")
-                        .WithMany()
+                        .WithMany("Pets")
                         .HasForeignKey("ClientId");
 
                     b.HasOne("api_vet_app.Models.Pet.Especie", "Especie")
@@ -886,6 +900,11 @@ namespace api_vet_app.Migrations
                     b.Navigation("ClientPet");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("api_vet_app.Models.Persona.Client", b =>
+                {
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

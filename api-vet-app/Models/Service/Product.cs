@@ -15,8 +15,9 @@ namespace api_vet_app.Models.Service
 
         // Foreign Key's
         [ForeignKey(nameof(IdLab)), Required]
-        public int IdLab { get; set; }
+        public string? IdLab { get; set; }
         public Lab? Lab { get; set; }
+
         [ForeignKey(nameof(VetId)), Required]
         public string? VetId { get; set; }
         public User? User { get; set; }

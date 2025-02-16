@@ -23,13 +23,16 @@ namespace api_vet_app.Models.Service
 
         // Foreign Key's
         [ForeignKey(nameof(IdJob)), Required]
-        public int IdJob {  get; set; }
+        public string? IdJob {  get; set; }
         public Job? Job { get; set; }
+
         [ForeignKey(nameof(IdAttending)), Required]
-        public int IdAttending { get; set; }
+        public string? IdAttending { get; set; }
         public Attending? Attending { get; set; }
+
         [ForeignKey(nameof(VetId)), Required]
         public string? VetId { get; set; }
         public User? User { get; set; }
+
     }
 }
