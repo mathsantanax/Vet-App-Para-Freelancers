@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nPI2CqpfqIA=",
+  "dgSpecHash": "S1krcL6rFTA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\api-vet-app.csproj",
+  "projectFilePath": "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\api-vet-app.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mathe\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\mathe\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

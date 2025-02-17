@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\api-vet-app.csproj": {}
+    "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\api-vet-app.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\api-vet-app.csproj": {
+    "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\api-vet-app.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\api-vet-app.csproj",
+        "projectUniqueName": "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\api-vet-app.csproj",
         "projectName": "api-vet-app",
-        "projectPath": "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\api-vet-app.csproj",
+        "projectPath": "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\api-vet-app.csproj",
         "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathe\\source\\repos\\Vet-App-For-Freelancers\\api-vet-app\\obj\\",
+        "outputPath": "C:\\Users\\mathe\\Documents\\Repositórios Git\\vetapp\\Vet-App-Para-Freelancers\\api-vet-app\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -103,7 +103,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
