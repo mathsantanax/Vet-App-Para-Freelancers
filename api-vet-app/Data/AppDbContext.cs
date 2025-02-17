@@ -22,6 +22,7 @@ namespace api_vet_app.Data
 
         // Service
         public DbSet<Attending> Attendings { get; set; }
+        public DbSet<Lab> Lab { get; set; }
         public DbSet<Job> Job { get; set; }
         public DbSet<Payment> Payment { get; set; }
         public DbSet<Product> Products { get; set; }

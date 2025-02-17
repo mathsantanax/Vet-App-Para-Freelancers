@@ -9,13 +9,15 @@ namespace api_vet_app.Endpoints
         public static WebApplication MapEndpoints(this WebApplication app)
         {
 
-            app.Weather()
+            app.Home()
             .User()
             .Client()
             .Pet()
             .Especie()
             .Raca()
-            .Payment();
+            .Payment()
+            .Lab()
+            .Job();
             
 
             return app;

@@ -1,5 +1,24 @@
 [
   {
+    "ContainingType": "api_vet_app.Endpoints.MapHomeEndpoint\u002B\u003C\u003Ec",
+    "Method": "\u003CHome\u003Eb__0_0",
+    "RelativePath": "",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Home"
+    ]
+  },
+  {
     "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapClientEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CClient\u003Eb__0_0",
     "RelativePath": "client",
@@ -138,6 +157,144 @@
     ]
   },
   {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapJobEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CJob\u003Eb__0_0",
+    "RelativePath": "job",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapJobEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CJob\u003Eb__0_2",
+    "RelativePath": "job",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.Models.Service.Job",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapJobEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CJob\u003Eb__0_1",
+    "RelativePath": "job/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapLabEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CLab\u003Eb__0_2",
+    "RelativePath": "lab",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.Models.Service.Lab",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapLabEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CLab\u003Eb__0_0",
+    "RelativePath": "Lab",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapLabEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CLab\u003Eb__0_1",
+    "RelativePath": "lab/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
     "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapPaymentEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CPayment\u003Eb__0_0",
     "RelativePath": "payment",
@@ -241,7 +398,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.String",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -374,24 +531,5 @@
     "Tags": [
       "User"
     ]
-  },
-  {
-    "ContainingType": "api_vet_app.Endpoints.WeatherForecast\u002B\u003C\u003Ec__DisplayClass0_0",
-    "Method": "\u003CWeather\u003Eb__0",
-    "RelativePath": "weatherforecast",
-    "HttpMethod": "GET",
-    "IsController": false,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "api_vet_app.Endpoints.WeatherForecast\u002BWeatherForecasta[]",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ],
-    "EndpointName": "GetWeatherForecast"
   }
 ]

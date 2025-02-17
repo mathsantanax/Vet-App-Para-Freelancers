@@ -16,21 +16,18 @@ namespace api_vet_app.Endpoints.PetEndpoints
         public static WebApplication Pet(this WebApplication app)
         {
 
-            app.MapGet("/pet/{id}", [Authorize] async (string id, AppDbContext dbContext, ClaimsPrincipal user) =>
+            app.MapGet("/pet/{id}", [Authorize] async (int id, AppDbContext dbContext, ClaimsPrincipal user) =>
             {
                 // Obtém o Id do vet
                 var vetIdStr = user.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(vetIdStr))
                     return Results.Unauthorized();
 
-                // Converte id do cliente para int, se necessário
-                if (!int.TryParse(id, out int clientId))
-                    return Results.BadRequest("Formato inválido para Id do Cliente.");
-
-                // Busca pets pelo id do cliente e id do vet
                 var pets = await dbContext.ClientsPet
-                                          .Where(p => p.IdClient == clientId)
-                                          .ToListAsync();
+                             .Where(p => p.Client.Id.Equals(id) && p.VetId == vetIdStr)
+                             .Include(r => r.Raca)
+                             .Include(e => e.Especie)
+                             .ToListAsync();
 
                 if (!pets.Any())
                     return Results.NotFound("Nenhum pet encontrado.");

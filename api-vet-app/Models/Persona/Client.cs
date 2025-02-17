@@ -19,6 +19,6 @@ namespace api_vet_app.Models.Persona
         [Required]
         public string? VetId { get; set; }
 
-        public List<ClientPet>? Pets { get; set; }
+        List<ClientPet>? ClientsPet { get; set; }
     }
 }
