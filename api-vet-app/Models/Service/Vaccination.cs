@@ -3,6 +3,7 @@ using api_vet_app.Models.Persona;
 using api_vet_app.Models.Pet;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api_vet_app.Models.Service
 {
@@ -16,19 +17,23 @@ namespace api_vet_app.Models.Service
 
         // Foreign Key's
         [ForeignKey(nameof(IdClientPet)), Required]
-        public string? IdClientPet { get; set; }
+        public int IdClientPet { get; set; }
+        [JsonIgnore]
         public ClientPet? ClientPet { get; set; }
 
         [ForeignKey(nameof(IdClient)), Required]
-        public string? IdClient {  get; set; }
+        public int IdClient {  get; set; }
+        [JsonIgnore]
         public Client? Client { get; set; }
 
         [ForeignKey(nameof(IdAttending)), Required]
-        public string? IdAttending { get; set; }
+        public int IdAttending { get; set; }
+        [JsonIgnore]
         public Attending? Attending { get; set; }
 
         [ForeignKey(nameof(VetId)), Required]
         public string? VetId { get; set; }
+        [JsonIgnore]
         public User? User { get; set; }
     }
 }

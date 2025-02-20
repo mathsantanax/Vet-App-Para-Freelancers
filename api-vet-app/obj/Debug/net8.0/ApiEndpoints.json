@@ -19,6 +19,75 @@
     ]
   },
   {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapAttendingsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CAttendings\u003Eb__0_0",
+    "RelativePath": "attending",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.Models.Service.Attending",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapAttendingsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CAttendings\u003Eb__0_1",
+    "RelativePath": "attending",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapAttendingsEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CAttendings\u003Eb__0_2",
+    "RelativePath": "attending/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
     "ContainingType": "api_vet_app.Endpoints.PersonaEndpoints.MapClientEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CClient\u003Eb__0_0",
     "RelativePath": "client",
@@ -414,6 +483,66 @@
     ]
   },
   {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapProductItemEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CProductItem\u003Eb__0_0",
+    "RelativePath": "productitem",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapProductItemEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CProductItem\u003Eb__0_1",
+    "RelativePath": "productitem",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.Models.Service.ProductItem",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapServiceItemEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CServiceItem\u003Eb__0_1",
+    "RelativePath": "productitem",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "api_vet_app.Endpoints.PetEndpoints.MapRacaEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CRaca\u003Eb__0_2",
     "RelativePath": "raca",
@@ -480,6 +609,31 @@
     ],
     "Tags": [
       "Racas"
+    ]
+  },
+  {
+    "ContainingType": "api_vet_app.Endpoints.ServiceEndpoints.MapServiceItemEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CServiceItem\u003Eb__0_0",
+    "RelativePath": "serviceitem",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "api_vet_app.Models.Service.ServiceItem",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Service"
     ]
   },
   {

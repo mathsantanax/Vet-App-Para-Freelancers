@@ -16,8 +16,11 @@ namespace api_vet_app.Endpoints
             .Especie()
             .Raca()
             .Payment()
+            .Attendings()
             .Lab()
-            .Job();
+            .Job()
+            .ProductItem()
+            .ServiceItem();
             
 
             return app;

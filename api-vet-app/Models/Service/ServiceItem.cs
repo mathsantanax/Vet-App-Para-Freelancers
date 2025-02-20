@@ -1,12 +1,13 @@
 ﻿using api_vet_app.Models.Persona;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api_vet_app.Models.Service
 {
     public class ServiceItem
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), JsonIgnore]
         public int Id { get; set; }
         // Nome
         [StringLength(50), Required]
@@ -23,15 +24,18 @@ namespace api_vet_app.Models.Service
 
         // Foreign Key's
         [ForeignKey(nameof(IdJob)), Required]
-        public string? IdJob {  get; set; }
+        public int? IdJob {  get; set; }
+        [JsonIgnore]
         public Job? Job { get; set; }
 
         [ForeignKey(nameof(IdAttending)), Required]
-        public string? IdAttending { get; set; }
+        public int? IdAttending { get; set; }
+        [JsonIgnore]
         public Attending? Attending { get; set; }
 
         [ForeignKey(nameof(VetId)), Required]
         public string? VetId { get; set; }
+        [JsonIgnore]
         public User? User { get; set; }
 
     }
