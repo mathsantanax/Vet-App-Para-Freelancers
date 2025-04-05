@@ -41,7 +41,8 @@
                            VerticalOptions="Center"
                            FontSize="16"
                            TextColor="Black" />
-                    <Switch IsToggled="{Binding IsToggle}" 
+                    <Switch IsToggled="{Binding IsNotificationEnabled, Mode=TwoWay}" 
+                            ThumbColor="Green"
                             OnColor="LightBlue"
                             />
                 </StackLayout>

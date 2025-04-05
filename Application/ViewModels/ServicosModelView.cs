@@ -27,7 +27,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         private int id;
 
         [ObservableProperty]
-        private string nome;
+        private string? nome;
 
         [ObservableProperty]
         private decimal preco;
@@ -47,6 +47,19 @@ namespace Vet_App_For_Freelancers.ViewModels
             get => _IsVisibleButtonCadastrar;
             set => SetProperty(ref _IsVisibleButtonCadastrar, value);
         }
+        private Servico? servicoSelected;
+
+        public Servico? ServicoSelected
+        {
+            get => servicoSelected;
+            set 
+            {
+                if (SetProperty(ref servicoSelected, value))
+                {
+                    AdicionarServicoCommand.Execute(servicoSelected);
+                }
+            } 
+        }
 
         public ICommand AdicionarServicoCommand { get; }
         public ICommand AlterarServicoCommand { get; }
@@ -65,26 +78,13 @@ namespace Vet_App_For_Freelancers.ViewModels
             Task.Run(async () => await InitializeAsync());
         }
 
-        private Servico servicoSelected;
 
-        public Servico ServicoSelected
-        {
-            get => servicoSelected;
-            set 
-            {
-                if (SetProperty(ref servicoSelected, value))
-                {
-                    AdicionarServicoCommand.Execute(servicoSelected);
-                }
-            } 
-        }
-
-
+        // inicio assincrono
         public async Task InitializeAsync()
         {
             await GetServicos();
         }
-
+        // selecionar serviço
         private async void OnItemSelected(Servico selectedServico)
         {
             try
@@ -98,7 +98,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao selecionar o serviço. \n {ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"Erro ao selecionar o serviço. \n {ex.Message}", "Ok");
             }
             finally
             {
@@ -106,7 +106,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsVisibleButtonAlterar = true;
             }
         }
-
+        // carregar serviços
         public async Task GetServicos()
         {
             try
@@ -127,21 +127,21 @@ namespace Vet_App_For_Freelancers.ViewModels
                 Debug.WriteLine(ex.Message);
             }
         }
-
+        // alterar serviços
         private async Task AlterarServico()
         {
             try
             {
                 servicoDataAccess.Update(new Servico {
                     Id = id,
-                    NomeService = Nome,
+                    NomeService = Nome!,
                     Preco = Preco
                 });
-                await Application.Current.MainPage.DisplayAlert("Sucesso", "Alterado com Sucesso", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Sucesso", "Alterado com Sucesso", "Ok");
             }
             catch(Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
             finally
             {
@@ -150,10 +150,10 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsVisibleButtonAlterar = false;
                 id = 0;
                 Preco = 0;
-                Nome = null;
+                Nome = "";
             }
         }
-
+        // adicionar serviço
         private async Task AddServico()
         {
             try
@@ -167,27 +167,27 @@ namespace Vet_App_For_Freelancers.ViewModels
                             NomeService = Nome.ToUpper(),
                             Preco = Preco
                         });
-                        await Application.Current.MainPage.DisplayAlert("Sucesso", "Cadastrado com Sucesso", "Ok");
+                        await Application.Current!.MainPage!.DisplayAlert("Sucesso", "Cadastrado com Sucesso", "Ok");
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Erro", $"O preço não pode ser igual a 0. {preco}", "Ok");
+                        await Application.Current!.MainPage!.DisplayAlert("Erro", $"O preço não pode ser igual a 0. {Preco}", "Ok");
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", $"O Serviço não pode estar vazio {Nome}", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Erro", $"O Serviço não pode estar vazio {Nome}", "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro",$"{ex.Message}","Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro",$"{ex.Message}","Ok");
             }
             finally
             {
                 await GetServicos();
                 Preco = 0;
-                Nome = null;
+                Nome = "";
             }
         }
     }

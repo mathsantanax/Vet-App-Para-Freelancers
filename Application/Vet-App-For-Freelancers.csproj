@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\veticon.svg" ForegroundFile="Resources\AppIcon\veticon.svg"/>
+		<MauiIcon Include="Resources\AppIcon\veticon.svg" ForegroundFile="Resources\AppIcon\veticon.svg" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\vet.svg"/>
+		<MauiSplashScreen Include="Resources\Splash\vet.svg" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />

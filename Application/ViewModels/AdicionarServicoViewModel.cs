@@ -26,14 +26,14 @@ namespace Vet_App_For_Freelancers.ViewModels
         private readonly ProdutoDataAccess _produtoDataAccess;
 
         [ObservableProperty]
-        public Tutor tutorView;
+        public Tutor? tutorView;
 
         [ObservableProperty]
-        public Pet petView;
+        public Pet? petView;
 
-        private Servico servicoSelecionado;
+        private Servico? servicoSelecionado;
 
-        public Servico ServicoSelecionado
+        public Servico? ServicoSelecionado
         {
             get => servicoSelecionado;
             set
@@ -44,9 +44,9 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
-        private Produto produtoSelecionado;
+        private Produto? produtoSelecionado;
 
-        public Produto ProdutoSelecionado
+        public Produto? ProdutoSelecionado
         {
             get => produtoSelecionado;
             set
@@ -86,7 +86,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         private decimal totalProdutos;
 
         [ObservableProperty]
-        private string numeroMicrochip;
+        private string? numeroMicrochip;
 
         public ObservableCollection<Produto> ObservableProdutos { get; set; }
 
@@ -98,8 +98,8 @@ namespace Vet_App_For_Freelancers.ViewModels
 
         public ObservableCollection<ServicoPresentation> ApresentacaoItems { get; set; }
 
-        private bool _MicroChipIsVisible = false;
-        public bool MicroChipIsVisible
+        private bool? _MicroChipIsVisible = false;
+        public bool? MicroChipIsVisible
         {
             get => _MicroChipIsVisible;
             set
@@ -179,27 +179,29 @@ namespace Vet_App_For_Freelancers.ViewModels
 
             Task.Run(async () => await InitializeAsync());
         }
-
+        
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await GetServicos();
             await GetProdutos();
         }
 
+        // finalizar Serviço
         private async Task FinalizarAsync()
         {
             try
             {
                 await InserirNumeroMicrochip();
-                await App.Current.MainPage.Navigation.PopModalAsync();
-                await Application.Current.MainPage.Navigation.PushModalAsync(new FinalizarNovoServicoPageView(tutorView, petView, amount, desconto, itemAtendimentos, itemServicos));
+                await App.Current!.MainPage!.Navigation.PopModalAsync();
+                await Application.Current.MainPage.Navigation.PushModalAsync(new FinalizarNovoServicoPageView(TutorView!, PetView!, Amount, Desconto, itemAtendimentos, itemServicos));
             }
             catch(Exception ex)
             {
                 Debug.WriteLine($"Erro ao carregar serviços: {ex.Message}");
             }
         }
-
+        // Carregar produtos
         private async Task GetProdutos()
         {
             IsLoaded = false;
@@ -224,7 +226,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsLoaded = true;
             }
         }
-
+        // carregar serviços
         private async Task GetServicos()
         {
             IsLoaded = false;
@@ -249,27 +251,30 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsLoaded = true;
             }
         }
+        // voltar para pagina anterior
         private async void GoBack(object obj)
         {
-            await Application.Current.MainPage.Navigation.PopModalAsync();
+            await Application.Current!.MainPage!.Navigation.PopModalAsync();
         }
 
         #region Quantidades
+        // alterar quantidade de serviço
         private void AlterarQuantidadeServicos(int incremento)
         {
             if(servicoSelecionado != null)
             {
                 QuantidadeServicos = Math.Max(1, QuantidadeServicos + incremento);
-                TotalServicos = ServicoSelecionado.Preco * QuantidadeServicos; 
+                TotalServicos =  ServicoSelecionado!.Preco * QuantidadeServicos; 
             }
         }
 
+        // alterar quantidade de produtos
         private void AlterarQuantidadeProdutos(int incremento)
         {
             if(produtoSelecionado != null)
             {
                 QuantidadeProdutos = Math.Max(1, QuantidadeProdutos + incremento);
-                TotalProdutos = ProdutoSelecionado.Preco * QuantidadeProdutos;
+                TotalProdutos = ProdutoSelecionado!.Preco * QuantidadeProdutos;
 
             }
         }
@@ -277,29 +282,31 @@ namespace Vet_App_For_Freelancers.ViewModels
 
 
         #region Adicionar Serviços e Produtos e Desconto
-
+        // atualizar totais
         private void AtualizarPreco()
         {
             TotalServicos = ServicoSelecionado?.Preco ?? 0;
             TotalProdutos = ProdutoSelecionado?.Preco ?? 0;
         }
 
+        // atualizar total com desconto
         private void AtualizarTotal()
         {
             TotalAmout = Amount - Desconto;
         }
-
+        // inserir descontro
         private async Task InsertDesconto()
         {
             if (Desconto > Amount)
             {
-                await App.Current.MainPage.DisplayAlert("Alerta", "Desconto não pode ser maior que total de serviço", "ok");
+                await App.Current!.MainPage!.DisplayAlert("Alerta", "Desconto não pode ser maior que total de serviço", "ok");
             }
             else
             {
                 AtualizarTotal();
             }
         }
+        // inserir serviço
         private async Task InsertServiceOnItemServicoAsync()
         {
             await Task.Delay(100);
@@ -336,7 +343,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsLoadedItemServico = false;
             }
         }
-
+        // inserir produto
         private async Task InsertProdutosOnItemAtendimento()
         {
             await Task.Delay(100);
@@ -368,13 +375,13 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsLoadedItemProduto = false;
             }
         }
-
+        // inserir numero de microchip
         private async Task InserirNumeroMicrochip()
         {
             await Task.Delay(100);
             if (NumeroMicrochip != null && NumeroMicrochip != "")
             {
-                PetView.NumeroMicrochip = NumeroMicrochip;
+                PetView!.NumeroMicrochip = NumeroMicrochip;
             }
         }
 

@@ -40,8 +40,8 @@ namespace Vet_App_For_Freelancers.ViewModels
         [ObservableProperty]
         private decimal amout;
 
-        private Pagamento pagamentoSelecionado;
-        public Pagamento PagamentoSelecionado
+        private Pagamento? pagamentoSelecionado;
+        public Pagamento? PagamentoSelecionado
         {
             get => pagamentoSelecionado;
             set
@@ -150,14 +150,13 @@ namespace Vet_App_For_Freelancers.ViewModels
             });
 
         }
-
-
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await PresentationAsync();
             await GetPagamento();
         }
-
+        // carregar pagamentos
         private async Task GetPagamento()
         {
             await Task.Delay(100);
@@ -176,11 +175,11 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao carregar pagamentos: {ex.Message}", "OK");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"Erro ao carregar pagamentos: {ex.Message}", "OK");
                 Debug.WriteLine(ex.Message);
             }
         }
-
+        // aprensentação dos itens
         private async Task PresentationAsync()
         {
             await Task.Delay(100);
@@ -221,13 +220,13 @@ namespace Vet_App_For_Freelancers.ViewModels
                 ItensLoaded = true;
             }
         }
-
+        // voltar para a pagina anterior
         private async void GoBack(object obj)
         {
-            await Application.Current.MainPage.Navigation.PopModalAsync();
+            await Application.Current!.MainPage!.Navigation.PopModalAsync();
 
         }
-
+        // finalizar
         private async Task FinalizarAsync()
         {
             await Task.Delay(100);
@@ -243,22 +242,22 @@ namespace Vet_App_For_Freelancers.ViewModels
                     {
                         CadastrarProximaVacinacao();
                     }
-                    await Application.Current.MainPage.DisplayAlert("Sucesso", "Venda Finalizada", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Sucesso", "Venda Finalizada", "Ok");
                     WeakReferenceMessenger.Default.Send(new PetMessage(PetView.Id));
                     await Application.Current.MainPage.Navigation.PopModalAsync();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alerta", "Houve um Problema.", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Alerta", "Houve um Problema.", "Ok");
                 }
 
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Alerta", $"{ex.Message}", "OK");
+                await Application.Current!.MainPage!.DisplayAlert("Alerta", $"{ex.Message}", "OK");
             }
         }
-
+        // atualizar numero de microchip
         private void AtualizarNumeroMicrochip()
         {
             if(PetView.NumeroMicrochip != null && PetView.NumeroMicrochip != "")
@@ -266,14 +265,14 @@ namespace Vet_App_For_Freelancers.ViewModels
                 _petDataAccess.Update(PetView);
             }
         }
-
+        // cadastrar atendimento
         private bool CadastrarAtendimento()
         {
             // Verificando se o método de pagamento foi selecionado
             if (string.IsNullOrEmpty(PagamentoSelecionado?.MetodoPagamento))
             {
                 // Caso o método de pagamento não tenha sido selecionado
-                Application.Current.MainPage.DisplayAlert("Alerta", "Selecione a Forma de Pagamento", "OK");
+                Application.Current!.MainPage!.DisplayAlert("Alerta", "Selecione a Forma de Pagamento", "OK");
                 return false;
             }
 
@@ -296,12 +295,12 @@ namespace Vet_App_For_Freelancers.ViewModels
             {
                 // Caso ocorra um erro durante a inserção
                 Debug.WriteLine(ex.Message);
-                Application.Current.MainPage.DisplayAlert("Erro", "Erro ao cadastrar o atendimento", "OK");
+                Application.Current!.MainPage!.DisplayAlert("Erro", "Erro ao cadastrar o atendimento", "OK");
                 return false;
             }
 
         }
-
+        // cadastrar proxima vacinação
         private void CadastrarProximaVacinacao()
         {
             try
@@ -314,11 +313,11 @@ namespace Vet_App_For_Freelancers.ViewModels
                         IdPet = PetView.Id,
                         IdAtendimento = Atendimento.Id,
                     });
-                    Application.Current.MainPage.DisplayAlert("Erro", $"´Próxima vacina cadastrada {Date}", "OK");
+                    Debug.WriteLine($"´Próxima vacina cadastrada {Date.Date}");
                 }
                 else
                 {
-                    Application.Current.MainPage.DisplayAlert("Erro", $"Não incluido para as próximas vacinas {Date}", "OK");
+                    Application.Current!.MainPage!.DisplayAlert("Erro", $"Não incluido para as próximas vacinas {Date.Date}", "OK");
                 }
             }
             catch (Exception ex)
@@ -326,7 +325,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 Debug.WriteLine(ex.Message);
             }
         }
-
+        // cadastrar no banco os produtos
         private void CadastrarItensDeProdutos()
         {
             try
@@ -349,7 +348,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 Debug.WriteLine(ex.Message);
             }
         }
-
+        // cadastrar no banco os serviços
         private void CadastrarItensDeServico()
         {
             try

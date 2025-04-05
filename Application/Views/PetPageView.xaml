@@ -82,7 +82,8 @@
                                  WidthRequest="50"
                                  ImageSource="telephone.png"
                                  BackgroundColor="Transparent"
-                                CornerRadius="50"/>
+                                CornerRadius="50"
+                                    Command="{Binding LigarParaTutorCommand}"/>
                             <Button Grid.Column="1"
                                     Margin="5"
                                  Grid.Row="2"
@@ -91,7 +92,8 @@
                                  WidthRequest="50"
                                  ImageSource="whatsapp.png"
                                  BackgroundColor="Transparent"
-                                CornerRadius="50"/>
+                                CornerRadius="50"
+                                    Command="{Binding AbrirWhatsappCommand }"/>
                         </Grid>
                     </Grid>
                 </Frame>

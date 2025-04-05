@@ -1,8 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Plugin.LocalNotification;
-using Plugin.LocalNotification.EventArgs;
-using SQLite;
-using System.Diagnostics;
 using Vet_App_For_Freelancers.Data;
 using Vet_App_For_Freelancers.DataAccess;
 using Vet_App_For_Freelancers.Models.ModelPetETutor;
@@ -32,7 +29,6 @@ namespace Vet_App_For_Freelancers
             builder.Services.AddSingleton<DatabaseConfig>();
             builder.Services.AddSingleton<NotificationService>();
 
-            // Registrando o ConfigModelView para injeção de dependência
             builder.Services.AddTransient<ConfigModelView>();
 
             builder.Services.AddTransient<Tutor>();
@@ -57,34 +53,10 @@ namespace Vet_App_For_Freelancers
 
             // Registrando os outros serviços e páginas
             builder.Services.AddTransient<ConfiguracoesPageView>();
-
-
 #if DEBUG
             builder.Logging.AddDebug();
 #endif  
-            LocalNotificationCenter.Current.NotificationActionTapped += OnNotificationTapped;
             return builder.Build();
-        }
-
-        private static async void OnNotificationTapped(NotificationEventArgs e)
-        {
-            try
-            {
-                // Extrair os dados enviados na notificação
-                var data = e.Request.ReturningData;
-                if (!string.IsNullOrEmpty(data))
-                {
-                     await Shell.Current.GoToAsync($"PetPageView?PetId={data}");
-                }
-                else
-                {
-                    Debug.WriteLine("Nenhum dado foi enviado com a notificação.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Erro ao processar a notificação clicada: {ex.Message}");
-            }
         }
     }
 }

@@ -1,15 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.Maui.Controls;
 using SQLite;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Vet_App_For_Freelancers.Data;
 using Vet_App_For_Freelancers.DataAccess;
@@ -26,16 +19,16 @@ namespace Vet_App_For_Freelancers.ViewModels
         private readonly EspecieDataAccess especieDataAccess;
 
         [ObservableProperty]
-        public string nomePet;
+        public string? nomePet;
 
         [ObservableProperty]
-        public string microship;
+        public string? microship;
 
         [ObservableProperty]
         public int idadePet;
 
         [ObservableProperty]
-        public string sexoPet;
+        public string? sexoPet;
 
         [ObservableProperty]
         public float peso;
@@ -47,10 +40,10 @@ namespace Vet_App_For_Freelancers.ViewModels
         public ObservableCollection<Especie> especies;
 
         [ObservableProperty]
-        public Raca racaSelecionada;
+        public Raca? racaSelecionada;
 
         [ObservableProperty]
-        public Especie especieSelecionada;
+        public Especie? especieSelecionada;
 
         private Tutor tutor1;
 
@@ -83,12 +76,14 @@ namespace Vet_App_For_Freelancers.ViewModels
             _ = InitializeAsync();
         }
 
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await GetRacas();
             await GetEspecies();
         }
 
+        // pega as raças no banco de dados
         private async Task GetRacas()
         {
             await Task.Delay(200);
@@ -117,9 +112,10 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // função para adicionar a raça
         private async void CommandAdicionarRaca()
         {
-            string raca = await Application.Current.MainPage.DisplayPromptAsync("Cadastro", "Insira a Raca");
+            string raca = await Application.Current!.MainPage!.DisplayPromptAsync("Cadastro", "Insira a Raca");
             try
             {
                 if (raca != null)
@@ -137,6 +133,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // função parar pegar as especies no banco de dados
         private async Task GetEspecies()
         {
             await Task.Delay(200);
@@ -173,9 +170,10 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        //função para adicionar especie
         private async void CommandAdicionarEspecie()
         {
-            string especie = await Application.Current.MainPage.DisplayPromptAsync("Cadastro", "Insira a Especie");
+            string especie = await Application.Current!.MainPage!.DisplayPromptAsync("Cadastro", "Insira a Especie");
             try
             {
                 if (especie != null)
@@ -193,27 +191,29 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // função para adicionar pet
         private async void CommandAdicionarPet()
         {
             petDataAccess.Insert(new Pet
             {
-                NomePet = nomePet.ToUpper(),
-                NumeroMicrochip = microship,
-                Idade = idadePet,
-                Sexo = sexoPet.ToUpper(),
-                Peso = peso,
-                IdRaca = racaSelecionada.Id,
-                IdEspecie = especieSelecionada.Id,
+                NomePet = NomePet!.ToUpper(),
+                NumeroMicrochip = Microship!,
+                Idade = IdadePet!,
+                Sexo = SexoPet!.ToUpper(),
+                Peso = Peso,
+                IdRaca = RacaSelecionada!.Id,
+                IdEspecie = EspecieSelecionada!.Id,
                 IdTutor = tutor1.Id,
             });
-            await Application.Current.MainPage.DisplayAlert($"Cadastrado Realizado Com sucesso", "Alerta", "Ok");
+            await Application.Current!.MainPage!.DisplayAlert($"Cadastrado Realizado Com sucesso", "Alerta", "Ok");
             WeakReferenceMessenger.Default.Send(new PetAddedMessage(tutor1.Id));
             await Application.Current.MainPage.Navigation.PopModalAsync();
         }
 
+        // função para voltar para a pagina anterior
         private async void GoBack(object obj)
         {
-            await Application.Current.MainPage.Navigation.PopModalAsync();
+            await Application.Current!.MainPage!.Navigation.PopModalAsync();
         }
     }
 }

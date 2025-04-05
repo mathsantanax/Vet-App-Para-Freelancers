@@ -30,17 +30,17 @@ namespace Vet_App_For_Freelancers.ViewModels
         private ObservableCollection<Lab> labCollection;
 
         [ObservableProperty]
-        private Lab selectedLab;
+        private Lab? selectedLab;
 
         [ObservableProperty]
-        private string nome;
+        private string? nome;
 
         [ObservableProperty]
         private decimal valor;
 
-        private string nomeLaboratorio;
+        private string? nomeLaboratorio;
 
-        public string NomeLaboratorio
+        public string? NomeLaboratorio
         {
             get => nomeLaboratorio;
             set
@@ -111,12 +111,15 @@ namespace Vet_App_For_Freelancers.ViewModels
             Task.Run(async () => await InitializeAsync());
         }
 
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await GetProdutos();
             await GetLaboratorios();
         }
 
+
+        // selecionar produto
         private async void OnItemSelected(Produto selectedProduto)
         {
             try
@@ -134,7 +137,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Erro ao selecionar o serviço. \n {ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"Erro ao selecionar o serviço. \n {ex.Message}", "Ok");
             }
             finally
             {
@@ -143,34 +146,35 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // Editar produto
         private async Task EditProdutos()
         {
             try
             {
                 if (Nome != null && Nome != "")
                 {
-                    if (Valor != null & Valor != 0)
+                    if (Valor != 0)
                     {
                         EditarProduto.NomePruduto = Nome.ToUpper();
                         EditarProduto.Preco = Valor;
                         produtoDataAccess.Update(EditarProduto);
-                        await Application.Current.MainPage.DisplayAlert("Sucesso", "Alterado com Sucesso", "Ok");
+                        await Application.Current!.MainPage!.DisplayAlert("Sucesso", "Alterado com Sucesso", "Ok");
                         Nome = null;
                         Valor = 0;
                     }
                     else
                     { 
-                        await Application.Current.MainPage.DisplayAlert("Erro", "Valor Não pode estar Vazio", "Ok");
+                        await Application.Current!.MainPage!.DisplayAlert("Erro", "Valor Não pode estar Vazio", "Ok");
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Nome Não pode estar Vazio", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Erro", "Nome Não pode estar Vazio", "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
             finally
             {
@@ -180,6 +184,7 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // Adicionar produto
         private async Task AddProdutos()
         {
             try
@@ -188,36 +193,36 @@ namespace Vet_App_For_Freelancers.ViewModels
                 {
                     if(Nome != null && Nome != "")
                     {
-                        if(Valor != null & Valor != 0)
+                        if(Valor != 0)
                         {
                             produtoDataAccess.Insert(new Produto
                             {
                                 IdLab = SelectedLab.Id,
-                                NomePruduto = nome.ToUpper(),
-                                Preco = valor
+                                NomePruduto = Nome.ToUpper(),
+                                Preco = Valor
                             });
-                            await Application.Current.MainPage.DisplayAlert("Sucesso", "Cadastrado com Sucesso", "Ok");
+                            await Application.Current!.MainPage!.DisplayAlert("Sucesso", "Cadastrado com Sucesso", "Ok");
                             Nome = null;
                             Valor = 0;
                         }
                         else
                         {
-                            await Application.Current.MainPage.DisplayAlert("Erro", "Valor Não pode estar Vazio", "Ok");
+                            await Application.Current!.MainPage!.DisplayAlert("Erro", "Valor Não pode estar Vazio", "Ok");
                         }
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Erro", "Nome Não pode estar Vazio", "Ok");
+                        await Application.Current!.MainPage!.DisplayAlert("Erro", "Nome Não pode estar Vazio", "Ok");
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Erro", "Selecione um Laboratório", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Erro", "Selecione um Laboratório", "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
             finally
             {
@@ -226,7 +231,6 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsVisibleButtons = true;
             }
         }
-
         private async Task ProdutosVisivel()
         {
             await Task.Delay(100);
@@ -246,7 +250,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsVisibleButtons = false;
             }
         }
-
+        // carregar produtos
         private async Task GetProdutos()
         {
             try
@@ -265,10 +269,10 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch(Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
         }
-
+        // carregar laboratorios
         private async Task GetLaboratorios()
         {
             try
@@ -285,10 +289,10 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
             catch(Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
         }
-
+        // cadastrar laboratorio
         private async Task CadastrarLaboratorio()
         {
             try
@@ -297,19 +301,19 @@ namespace Vet_App_For_Freelancers.ViewModels
                 {
                     laboratorioDataAccess.Insert(new Lab
                     {
-                        NomeLaboratorio = nomeLaboratorio.ToUpper()
+                        NomeLaboratorio = NomeLaboratorio.ToUpper()
                     });
-                    await Application.Current.MainPage.DisplayAlert("Sucesso", $"Cadastrado com Sucesso!", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Sucesso", $"Cadastrado com Sucesso!", "Ok");
                     NomeLaboratorio = null;
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alerta", $"O Laboratorio não pode estar vazio!", "Ok");
+                    await Application.Current!.MainPage!.DisplayAlert("Alerta", $"O Laboratorio não pode estar vazio!", "Ok");
                 }
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Erro", $"{ex.Message}", "Ok");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"{ex.Message}", "Ok");
             }
             finally
             {

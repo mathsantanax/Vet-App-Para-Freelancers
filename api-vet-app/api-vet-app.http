@@ -1,6 +1,0 @@
-@api_vet_app_HostAddress = http://localhost:5118
-
-GET {{api_vet_app_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

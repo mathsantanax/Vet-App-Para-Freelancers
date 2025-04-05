@@ -29,10 +29,10 @@ namespace Vet_App_For_Freelancers.ViewModels
         private bool itensIsVisible = false;
 
         [ObservableProperty]
-        private string mesAnoAtual;
+        private string? mesAnoAtual;
 
         [ObservableProperty]
-        private string mesAtual;
+        private string? mesAtual;
 
         [ObservableProperty]
         private decimal totalMes;
@@ -60,7 +60,7 @@ namespace Vet_App_For_Freelancers.ViewModels
 
             Task.Run(async () => await InitializeAsync());
         }
-
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             try
@@ -77,7 +77,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 IsLoaded = true;
             }
         }
-
+        // carregar atendimento
         private async Task CarregarDadosAsync()
         {
             try
@@ -109,7 +109,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 ItensIsVisible = true;
             }
         }
-
+        // avaçar mes
         private async Task AvancarMes()
         {
             dataAtual = dataAtual.AddMonths(1);
@@ -117,9 +117,9 @@ namespace Vet_App_For_Freelancers.ViewModels
             AtualizarData(dataAtual);
             AtulizarDataMes(dataAtual);
 
-            _ = CarregarDadosAsync();
+            await CarregarDadosAsync();
         }
-
+        // voltar mes
         private async Task VoltarMes()
         {
             dataAtual = dataAtual.AddMonths(-1);
@@ -127,14 +127,14 @@ namespace Vet_App_For_Freelancers.ViewModels
             AtualizarData(dataAtual);
             AtulizarDataMes(dataAtual);
 
-            _ = CarregarDadosAsync();
+            await CarregarDadosAsync();
         }
-
+        // atualizar data 
         private void AtualizarData(DateTime data)
         {
             MesAnoAtual = data.ToString("MMMM yyyy", CultureInfo.CurrentCulture);
         }
-
+        // atualizar mes
         private void AtulizarDataMes(DateTime data)
         {
             MesAtual = data.ToString("MMMM", CultureInfo.CurrentCulture);

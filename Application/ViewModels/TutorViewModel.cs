@@ -56,16 +56,20 @@ namespace Vet_App_For_Freelancers.ViewModels
 
             _ = InitializeAsync();
         }
+
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await LoadPetsAsync();
         }
 
+        // carrega os pets do cliente selecionado 
+
         private async Task LoadPetsAsync()
         {
             try
             {
-                pets.Clear();
+                Pets.Clear();
 
                 await Task.Delay(500);
                 var petsFromDb = petDataAccess.GetByIdTutor(Tutor.Id);
@@ -76,7 +80,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                     {
                         p.Raca = racaDataAccess.GetById(p.IdRaca);
                         p.Especie = especieDataAccess.GetById(p.IdEspecie);
-                        pets.Add(p);
+                        Pets.Add(p);
                     }
                 }
             }
@@ -90,33 +94,40 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+
+        // quando o pet for selecionar abre a pagina do pet
         private async void OnItemSelected(Pet selectedPet)
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new PetPageView(selectedPet.Id));
+                await Shell.Current.GoToAsync($"petpageview?petId={selectedPet.Id}");
+
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Erro ao selecionar pet: {ex.Message}");
             }
         }
+
+        // função para adicionar pet 
         private async void OnAddPetClicked()
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new AdicionarPetPageView(_Tutor));
+                await Application.Current!.MainPage!.Navigation.PushModalAsync(new AdicionarPetPageView(_Tutor));
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Erro ao adicionar pet: {ex.Message}");
             }
         }
+
+        // retorna para pagina anterior
         private async void GoBack(object obj)
         {
-            await Application.Current.MainPage.Navigation.PopModalAsync();
+            await Application.Current!.MainPage!.Navigation.PopModalAsync();
         }
-
+        // mensagem para quando o pet for adicionado recarregar pagina e mostrar o pet novo
         private async void OnPetAddedMessageReceived(object recipient, PetAddedMessage message)
         {
             if (message.Value == Tutor.Id)
@@ -124,7 +135,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 await LoadPetsAsync();
             }
         }
-
+        // descontrutor
         ~TutorViewModel()
         {
             WeakReferenceMessenger.Default.Unregister<PetAddedMessage>(this);

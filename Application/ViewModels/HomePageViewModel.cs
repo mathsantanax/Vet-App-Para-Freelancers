@@ -22,6 +22,7 @@ namespace Vet_App_For_Freelancers.ViewModels
         const int RefreshDuration = 2;
         private bool isRefreshing;
 
+        // refresh da pagina
         public bool IsRefreshing
         {
             get => isRefreshing;
@@ -29,14 +30,14 @@ namespace Vet_App_For_Freelancers.ViewModels
         }
 
         private bool _IsLoaded = false;
-        public bool IsLoaded
+        public bool IsLoaded // para carregar o conteudo
         {
             get => _IsLoaded;
             set => SetProperty(ref _IsLoaded, value);
         }
 
-        private string searchQuery;
-        public string SearchQuery
+        private string? searchQuery;
+        public string? SearchQuery // para filtrar os clientes
         {
             get => searchQuery;
             set
@@ -48,8 +49,8 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
-        private ObservableCollection<Tutor> filteredTutores;
-        public ObservableCollection<Tutor> FilteredTutores
+        private ObservableCollection<Tutor>? filteredTutores;
+        public ObservableCollection<Tutor>? FilteredTutores
         {
             get => filteredTutores;
             set => SetProperty(ref filteredTutores, value);
@@ -72,13 +73,14 @@ namespace Vet_App_For_Freelancers.ViewModels
             _ = InitializeAsync();
         }
 
+        // inicio assincrono
         private async Task InitializeAsync()
         {
             await GetRegisterAsync();
         }
 
-        private Tutor selectedTutor;
-        public Tutor SelectedTutor
+        private Tutor? selectedTutor;
+        public Tutor? SelectedTutor // se o tutor for selecionado executa a função 
         {
             get => selectedTutor;
             set
@@ -90,17 +92,20 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // pagina de configuração
         public async void ConfigAsync()
         {
             try
             {
-                await Application.Current.MainPage.Navigation.PushAsync(new ConfiguracoesPageView());
+                await Application.Current!.MainPage!.Navigation.PushAsync(new ConfiguracoesPageView());
             }
             catch( Exception ex)
             {
                 Debug.WriteLine(ex);
             }
         }
+
+        // função para pegar os registro no banco de dados
 
         private async Task GetRegisterAsync()
         {
@@ -132,27 +137,28 @@ namespace Vet_App_For_Freelancers.ViewModels
             }
         }
 
+        // Método para Selecionar o cliente
         private async void OnItemSelected(Tutor selectedTutor)
         {
             try
             {
                 if (selectedTutor != null)
                 {
-                    await Application.Current.MainPage.Navigation.PushModalAsync(new TutorPageView(selectedTutor));
+                    await Application.Current!.MainPage!.Navigation.PushModalAsync(new TutorPageView(selectedTutor));
                     SelectedTutor = null;
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Erro ao selecionar pet: {ex.Message}");
-                await Application.Current.MainPage.DisplayAlert("Erro", $"Ocorreu um problema ao tentar abrir o serviço.{ex.Message}", "OK");
+                await Application.Current!.MainPage!.DisplayAlert("Erro", $"Ocorreu um problema ao tentar abrir o serviço.{ex.Message}", "OK");
             }
         }
 
-
+        // Método para adicionar cliente
         private async void AddTutor()
         {
-            string nome = await Application.Current.MainPage.DisplayPromptAsync("Cadastro", "Nome do Tutor");
+            string nome = await Application.Current!.MainPage!.DisplayPromptAsync("Cadastro", "Nome do Tutor");
 
             if (nome != null)
             {
@@ -181,7 +187,7 @@ namespace Vet_App_For_Freelancers.ViewModels
                 }
             }
         }
-
+        // filtra os cliente pelo search bar
         private void FilterTutores()
         {
             if (string.IsNullOrWhiteSpace(SearchQuery))

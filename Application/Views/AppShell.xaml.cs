@@ -8,7 +8,8 @@ namespace Vet_App_For_Freelancers
         {
             InitializeComponent();
 
-            Routing.RegisterRoute("PetPageView", typeof(PetPageView));
+            // Registrando Rota no Shell
+            Routing.RegisterRoute("petpageview", typeof(PetPageView));
         }
     }
 }

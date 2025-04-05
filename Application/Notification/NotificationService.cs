@@ -1,12 +1,12 @@
-﻿using Plugin.LocalNotification;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Plugin.LocalNotification;
 using Plugin.LocalNotification.AndroidOption;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Security;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Vet_App_For_Freelancers.Data;
 using Vet_App_For_Freelancers.DataAccess;
@@ -15,118 +15,163 @@ namespace Vet_App_For_Freelancers.Notification
 {
     public class NotificationService
     {
-        //SQLiteConnection _connection = DatabaseConfig.GetConnection();
-        //private readonly ProxVacinacaoAtendimentoDataAccess _dataAccess;
-        //private readonly PetDataAccess _petDataAccess;
+        private readonly SQLiteConnection _connection;
+        private readonly ProxVacinacaoAtendimentoDataAccess _dataAccess;
+        private readonly PetDataAccess _petDataAccess;
+        private CancellationTokenSource _cancellationTokenSource;
 
-        //public NotificationService()
-        //{
-        //    _dataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
-        //    _petDataAccess = new PetDataAccess(_connection);
+        public NotificationService()
+        {
+            _connection = DatabaseConfig.GetConnection();
+            _dataAccess = new ProxVacinacaoAtendimentoDataAccess(_connection);
+            _petDataAccess = new PetDataAccess(_connection);
 
-        //    Task.Run(async () => await VerificarPermissao());
-        //}
+            Task.Run(async () => await VerificarPermissao());
+        }
 
-        //private CancellationTokenSource _cancellationTokenSource;
-        //private bool _isCheckingVacinas = false;
-        //private bool _verificouPermissao = false;
+        // Verifica se as notificações estão habilitadas
+        public async Task<bool> AreNotificationsEnabled()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+            return status == PermissionStatus.Granted;
+        }
 
-        //public async Task<bool> AreNotificationsEnabled()
-        //{
-        //    var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
-        //    if (status != PermissionStatus.Granted)
-        //    {
-        //        return _isCheckingVacinas;
-        //    }
-        //    else
-        //    {
-        //        return _isCheckingVacinas;
-        //    }
-        //}
+        // Método para verificar a permissão de notificações
+        public async Task<bool> VerificarPermissao()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await Permissions.RequestAsync<Permissions.PostNotifications>();
+                status = PermissionStatus.Denied;
+                Debug.WriteLine($"a permissão do aplicativo está {status}");
+            }
+            EnableNotifications();
+            return status == PermissionStatus.Granted;
+        }
 
-        //public void EnableNotifications()
-        //{
-        //    if (!_isCheckingVacinas)
-        //    {
-        //        IniciarVerificacaoDeVacinas();
-        //    }
-        //}
+        // inicia a verificação
+        public void EnableNotifications()
+        {
+            _cancellationTokenSource = new CancellationTokenSource();
 
-        //public void DisableNotifications()
-        //{
-        //    if (_isCheckingVacinas)
-        //    {
-        //        PararVerificacaoDeVacinas();
-        //    }
-        //}
+            Task.Run(async () =>
+            {
+                while (!_cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    VerificarVacinasProximas();
+                    await Task.Delay(TimeSpan.FromHours(5), _cancellationTokenSource.Token);
+                }
+            }, _cancellationTokenSource.Token);
+        }
 
-        //public void IniciarVerificacaoDeVacinas()
-        //{
-        //    _cancellationTokenSource = new CancellationTokenSource();
+        // para a verificação de vacinas
+        public void DisableNotifications()
+        {
+            _cancellationTokenSource?.Cancel();
+        }
 
-        //    Task.Run(async () =>
-        //    {
-        //        while (!_cancellationTokenSource.Token.IsCancellationRequested)
-        //        {
-        //            VerificarVacinasProximas();
-        //            await Task.Delay(TimeSpan.FromHours(1), _cancellationTokenSource.Token); // Verifica a cada 1 hora
-        //        }
-        //    }, _cancellationTokenSource.Token);
-        //}
+        // verifica as próximas vacinas se está dentro de 2 dias e gera a notificação
+        private async void VerificarVacinasProximas()
+        {
+            DateTime notifyTime = DateTime.Now.AddHours(12);
 
-        //public void PararVerificacaoDeVacinas()
-        //{
-        //    _cancellationTokenSource?.Cancel();
+            // Garante que o horário da notificação sempre seja no futuro
+            if (notifyTime <= DateTime.Now)
+            {
+                notifyTime = DateTime.Now.AddMinutes(1);
+            }
 
-        //}
+            try
+            {
+                var vacinasProximas = _dataAccess.GetTwoDaysVacinas();
 
-        //private async Task VerificarPermissao()
-        //{
-        //    var status = await Permissions.CheckStatusAsync<Permissions.PostNotifications>();
-        //    if (status != PermissionStatus.Granted)
-        //    {
-        //        status = await Permissions.RequestAsync<Permissions.PostNotifications>();
-        //    }
+                foreach (var vacina in vacinasProximas)
+                {
+                    try
+                    {
+                        vacina.Pet = _petDataAccess.GetById(vacina.IdPet);
+                        if (vacina.Pet == null)
+                            continue;
+                        Debug.WriteLine($"Nome do pet{vacina.Pet.NomePet}");
 
-        //    _verificouPermissao = status == PermissionStatus.Granted;
-
-        //    if (_verificouPermissao)
-        //    {
-        //        IniciarVerificacaoDeVacinas();
-        //    }
-        //}
-
-        //private void VerificarVacinasProximas()
-        //{
-        //    var vacinasProximas = _dataAccess.GetTwoDaysVacinas();
-        //    try
-        //    {
-        //        foreach (var vacina in vacinasProximas)
-        //        {
-        //            vacina.Pet = _petDataAccess.GetById(vacina.IdPet);
-        //            var notification = new NotificationRequest
-        //            {
-        //                Title = "Vacinação Próxima.",
-        //                Description = $"A Vacinação do Pet {vacina.Pet.NomePet}\nEstá marcada para {vacina.DataProxima.ToString("dd MM YY")}",
-        //                Schedule = new NotificationRequestSchedule
-        //                {
-        //                    NotifyTime = DateTime.Now.AddSeconds(5),
-        //                },
-        //                Android = new AndroidOptions
-        //                {
-        //                    AutoCancel = true,
-        //                    IconSmallName = { ResourceName = "pata.png" },
-        //                },
-        //                ReturningData = vacina.IdPet.ToString()
-        //            };
-        //            LocalNotificationCenter.Current.Show(notification);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine($"Erro ao verificar vacinas próximas: {ex.Message}");
-        //    }
-        //}
-
+                        if(vacina.DataProxima.Date <= DateTime.Now.Date.AddDays(2))
+                        {
+                            var notification = new NotificationRequest
+                            {
+                                NotificationId = vacina.IdPet,
+                                Title = "Vacinação Próxima",
+                                Description = $"A vacinação do pet {vacina.Pet.NomePet} está marcada para {vacina.DataProxima:dd/MM/yyyy}.",
+                                Schedule = new NotificationRequestSchedule
+                                {
+                                    NotifyTime = notifyTime,
+                                    NotifyRepeatInterval = TimeSpan.FromHours(10),
+                                    RepeatType = NotificationRepeat.TimeInterval,
+                                },
+                                Android = new AndroidOptions
+                                {
+                                    AutoCancel = true,
+                                    IconSmallName = { ResourceName = "pata.png" },
+                                    VibrationPattern = new long[] { 0, 500, 200, 500 }
+                                },
+                                ReturningData = vacina.IdPet.ToString()
+                            };
+                            try
+                            {
+                                await LocalNotificationCenter.Current.Show(notification);
+                                Debug.WriteLine($"📢 Notificação agendada para {notifyTime}");
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Erro ao exibir notificação: {ex.Message}");
+                            }
+                        }
+                        else if(vacina.DataProxima.Date == DateTime.Now.Date)
+                        {
+                            var notification = new NotificationRequest
+                            {
+                                NotificationId = vacina.IdPet,
+                                Title = "Vacinação Próxima",
+                                Description = $"A vacinação do pet {vacina.Pet.NomePet} está marcada para Hoje {vacina.DataProxima:dd/MM/yyyy}.",
+                                Schedule = new NotificationRequestSchedule
+                                {
+                                    NotifyTime = DateTime.Now.AddHours(5),
+                                    NotifyRepeatInterval = TimeSpan.FromHours(10),
+                                    RepeatType = NotificationRepeat.TimeInterval
+                                },
+                                Android = new AndroidOptions
+                                {
+                                    AutoCancel = true,
+                                    IconSmallName = { ResourceName = "pata.png" },
+                                    VibrationPattern = new long[] { 0, 500, 200, 500 }
+                                },
+                                ReturningData = vacina.IdPet.ToString()
+                            };
+                            try
+                            {
+                                await LocalNotificationCenter.Current.Show(notification);
+                                Debug.WriteLine($"📢 Notificação agendada para {notifyTime}");
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"Erro ao exibir notificação: {ex.Message}");
+                            }
+                        }
+                    }
+                    catch (Exception innerEx)
+                    {
+                        Debug.WriteLine($"Erro ao processar vacina {vacina.IdPet}: {innerEx.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro ao verificar vacinas próximas: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Debug.WriteLine($"Detalhes da exceção: {ex.InnerException.Message}");
+                }
+            }
+        }
     }
 }
