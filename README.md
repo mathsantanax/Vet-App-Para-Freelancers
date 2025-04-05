@@ -1,7 +1,7 @@
 
 # 🐾 Vet App para Freelancers
 
-[![.NET](https://img.shields.io/badge/.NET-7.0-blueviolet?logo=dotnet)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-8.0-blueviolet?logo=dotnet)](https://dotnet.microsoft.com/)
 [![MAUI](https://img.shields.io/badge/MAUI-Mobile%20App-blue?logo=microsoft)](https://learn.microsoft.com/dotnet/maui/)
 [![License](https://img.shields.io/github/license/mathsantanax/Vet-App-Para-Freelancers)](LICENSE)
 
