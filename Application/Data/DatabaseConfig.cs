@@ -5,7 +5,7 @@ namespace Vet_App_For_Freelancers.Data
 {
     public class DatabaseConfig
     {
-        private static SQLiteConnection _connection;
+        private static SQLiteConnection? _connection;
 
         public static SQLiteConnection GetConnection()
         {
