@@ -53,7 +53,7 @@ O projeto está todo estruturado dentro da pasta `Application`, e segue o padrã
 
 ### Pré-requisitos
 
-- [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Visual Studio 2022+](https://visualstudio.microsoft.com/) com suporte ao MAUI
 
 ### Passos
