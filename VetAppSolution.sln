@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{A74F262E-BDE7-D5D2-89E9-785413424D0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vet-App-For-Freelancers", "Application\Vet-App-For-Freelancers.csproj", "{9F91291C-63AC-47F9-90B2-C523E2500CFF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VetApp", "Application\VetApp.csproj", "{9F91291C-63AC-47F9-90B2-C523E2500CFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +19,7 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|x64.Build.0 = Debug|Any CPU
 		{9F91291C-63AC-47F9-90B2-C523E2500CFF}.Debug|x86.ActiveCfg = Debug|Any CPU
