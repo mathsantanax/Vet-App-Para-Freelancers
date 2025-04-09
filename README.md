@@ -25,7 +25,7 @@ Abaixo, algumas capturas de tela do app em execução:
 
 🎥 Veja o app em ação no vídeo abaixo:
 
-[![Vídeo do VetApp](https://www.youtube.com/watch?v=aKBGxfRX07A)](https://www.youtube.com/watch?v=aKBGxfRX07A)
+[![VetApp - Demonstração](https://img.youtube.com/vi/aKBGxfRX07A/0.jpg)](https://www.youtube.com/watch?v=aKBGxfRX07A)
 
 ---
 
