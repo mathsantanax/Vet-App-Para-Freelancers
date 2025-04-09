@@ -33,7 +33,7 @@ Abaixo, algumas capturas de tela do app em execução:
 
 Você pode baixar o APK mais recente para testes:
 
-➡️ [Download VetApp-v1.0.apk](./Application/bin/Release/VetApp-v1.0.apk)
+➡️ [Download VetApp-v1.0.apk](https://github.com/mathsantanax/Vet-App-Para-Freelancers/blob/main/Application/bin/Release/VetApp-v1.0.apk)
 
 ## 📁 Estrutura do Projeto
 
