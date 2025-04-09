@@ -17,15 +17,15 @@ Abaixo, algumas capturas de tela do app em execução:
 
 | Tela Inicial | Cliente | Pet |
 |--------------|------------------|------------------|
-| ![screenshot1](./imagens/Página Home.jpeg) | ![screenshot2](./imagens/Página Cliente.jpeg) | ![screenshot3](./imagens/Página Pet.jpeg) |
+| ![screenshot1](./imagens/Página%20Home.jpeg) | ![screenshot2](./imagens/Página%20Cliente.jpeg) | ![screenshot3](./imagens/Página%20Pet.jpeg) |
 
-| Serviço | Finalizar | Relátorio |
+| Serviço | Serviço | Relátorio |
 |---------|---------------|----------------|
-| ![screenshot4](./imagens/Página Serviço.jpeg) | ![screenshot5](./imagens/Página Finalizar Serviço.jpeg) | ![screenshot6](./imagens/Página Relárorio.jpeg) |
+| ![screenshot4](./imagens/Página%20Serviço.jpeg) | ![screenshot5](./imagens/Página%20Serviço.jpeg) | ![screenshot6](./imagens/Página%20Relátorio.jpeg) |
 
 🎥 Veja o app em ação no vídeo abaixo:
 
-[![Vídeo do VetApp](./imagens/Apresentação.mp4)](VideoAprensetação)
+[![Vídeo do VetApp](./imagens/Apresentação.mp4)]
 
 
 ---
@@ -34,7 +34,7 @@ Abaixo, algumas capturas de tela do app em execução:
 
 Você pode baixar o APK mais recente para testes:
 
-➡️ [Download VetApp-v1.0.apk](./Application/bin/Release/net8.0-android/publish/VetApp-v1.0.apk)
+➡️ [Download VetApp-v1.0.apk](./Application/bin/Release/VetApp-v1.0.apk)
 
 ## 📁 Estrutura do Projeto
 
