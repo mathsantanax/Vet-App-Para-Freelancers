@@ -25,11 +25,7 @@ Abaixo, algumas capturas de tela do app em execução:
 
 🎥 Veja o app em ação no vídeo abaixo:
 
-<video width="100%" height="auto" controls>
-  <source src="./imagens/Apresentação.mp4" type="video/mp4">
-  Seu navegador não suporta vídeo HTML5.
-</video>
-
+[![Vídeo do VetApp](https://www.youtube.com/watch?v=aKBGxfRX07A)](https://www.youtube.com/watch?v=aKBGxfRX07A)
 
 ---
 
@@ -37,7 +33,7 @@ Abaixo, algumas capturas de tela do app em execução:
 
 Você pode baixar o APK mais recente para testes:
 
-<a href="./Application/bin/Release/VetApp-v1.0.apk" >➡️ Download VetApp-v1.0.apk</a>
+➡️ [Download VetApp-v1.0.apk](./Application/bin/Release/VetApp-v1.0.apk)
 
 ## 📁 Estrutura do Projeto
 
